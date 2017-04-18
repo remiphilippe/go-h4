@@ -14,7 +14,7 @@ import (
 	"time"
 )
 
-var supportedMethods = []string{"GET", "POST", "PUT"}
+//var supportedMethods = []string{"GET", "POST", "PUT"}
 
 func hashSHA256(content []byte) string {
 	h := sha256.New()
@@ -28,12 +28,19 @@ func hmacSHA256(key []byte, content string) []byte {
 	return mac.Sum(nil)
 }
 
+func checksum(content string, request *http.Request) *http.Request {
+	hash := hashSHA256([]byte(content))
+	request.Header.Set("X-Tetration-Cksum", hash)
+
+	return request
+}
+
 type H4 struct {
-	endpoint string
-	prefix   string
-	key      string
-	secret   string
-	verify   bool
+	Endpoint string
+	Prefix   string
+	Key      string
+	Secret   string
+	Verify   bool
 }
 
 func (h *H4) hash(request *http.Request) *http.Request {
@@ -49,7 +56,7 @@ func (h *H4) hash(request *http.Request) *http.Request {
 	buf.WriteString(request.Header.Get("Timestamp"))
 	buf.WriteString("\n")
 
-	hash := base64.StdEncoding.EncodeToString(hmacSHA256([]byte(h.secret), buf.String()))
+	hash := base64.StdEncoding.EncodeToString(hmacSHA256([]byte(h.Secret), buf.String()))
 	request.Header.Set("Authorization", hash)
 
 	return request
@@ -57,20 +64,20 @@ func (h *H4) hash(request *http.Request) *http.Request {
 
 func (h *H4) url(path string) string {
 	var buf bytes.Buffer
-	buf.WriteString(h.endpoint)
-	buf.WriteString(h.prefix)
+	buf.WriteString(h.Endpoint)
+	buf.WriteString(h.Prefix)
 	buf.WriteString(path)
 	url := buf.String()
 
 	return url
 }
 
-func (h *H4) Sign(request *http.Request) *http.Request {
+func (h *H4) sign(request *http.Request) *http.Request {
 
 	request.Header.Set("User-Agent", "Cisco Tetration Go client")
 	request.Header.Set("Content-Type", "application/json")
 	request.Header.Set("Timestamp", time.Now().UTC().Format("2006-01-02T15:04:05-0700"))
-	request.Header.Set("Id", h.key)
+	request.Header.Set("Id", h.Key)
 
 	return h.hash(request)
 }
@@ -80,7 +87,7 @@ func (h *H4) Get(path string) []byte {
 
 	url := h.url(path)
 
-	if h.verify == false {
+	if h.Verify == false {
 		insecureVerify = true
 	} else {
 		insecureVerify = false
@@ -95,7 +102,7 @@ func (h *H4) Get(path string) []byte {
 	if err != nil {
 		log.Fatal("NewRequest:", err)
 	}
-	h.Sign(req)
+	h.sign(req)
 
 	resp, err := client.Do(req)
 	if err != nil {
@@ -116,7 +123,7 @@ func (h *H4) Post(path string, json string) []byte {
 
 	url := h.url(path)
 
-	if h.verify == false {
+	if h.Verify == false {
 		insecureVerify = true
 	} else {
 		insecureVerify = false
@@ -135,12 +142,94 @@ func (h *H4) Post(path string, json string) []byte {
 
 	// Hash needs to be performed here, or the reader will mark it as closed
 	// Can't read twice https://groups.google.com/forum/#!topic/golang-nuts/S6qQHDtoxgo
-	hash := hashSHA256([]byte(json))
-	req.Header.Set("X-Tetration-Cksum", hash)
+	checksum(json, req)
 
-	h.Sign(req)
+	h.sign(req)
 
-	//spew.Dump(req)
+	resp, err := client.Do(req)
+	if err != nil {
+		log.Fatal("Do:", err)
+	}
+	defer resp.Body.Close()
+
+	body, err := ioutil.ReadAll(resp.Body)
+	if err != nil {
+		log.Fatal("Readall:", err)
+	}
+
+	return body
+}
+
+func (h *H4) Put(path string, json string) []byte {
+	var insecureVerify bool
+
+	url := h.url(path)
+
+	if h.Verify == false {
+		insecureVerify = true
+	} else {
+		insecureVerify = false
+	}
+
+	tr := &http.Transport{
+		TLSClientConfig: &tls.Config{InsecureSkipVerify: insecureVerify},
+	}
+	client := &http.Client{Transport: tr}
+	reader := strings.NewReader(json)
+
+	req, err := http.NewRequest("PUT", url, reader)
+	if err != nil {
+		log.Fatal("NewRequest:", err)
+	}
+
+	// Hash needs to be performed here, or the reader will mark it as closed
+	// Can't read twice https://groups.google.com/forum/#!topic/golang-nuts/S6qQHDtoxgo
+	checksum(json, req)
+
+	h.sign(req)
+
+	resp, err := client.Do(req)
+	if err != nil {
+		log.Fatal("Do:", err)
+	}
+	defer resp.Body.Close()
+
+	body, err := ioutil.ReadAll(resp.Body)
+	if err != nil {
+		log.Fatal("Readall:", err)
+	}
+
+	return body
+}
+
+func (h *H4) Delete(path string, json string) []byte {
+	var insecureVerify bool
+
+	url := h.url(path)
+
+	if h.Verify == false {
+		insecureVerify = true
+	} else {
+		insecureVerify = false
+	}
+
+	tr := &http.Transport{
+		TLSClientConfig: &tls.Config{InsecureSkipVerify: insecureVerify},
+	}
+	client := &http.Client{Transport: tr}
+	reader := strings.NewReader(json)
+
+	req, err := http.NewRequest("DELETE", url, reader)
+	if err != nil {
+		log.Fatal("NewRequest:", err)
+	}
+
+	// Hash needs to be performed here, or the reader will mark it as closed
+	// Can't read twice https://groups.google.com/forum/#!topic/golang-nuts/S6qQHDtoxgo
+	// FIXME Not sure if this is needed for DELETE?
+	checksum(json, req)
+
+	h.sign(req)
 
 	resp, err := client.Do(req)
 	if err != nil {
