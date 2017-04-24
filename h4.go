@@ -9,7 +9,9 @@ import (
 	"fmt"
 	"io/ioutil"
 	"log"
+	"mime/multipart"
 	"net/http"
+	"net/textproto"
 	"strings"
 	"time"
 )
@@ -75,7 +77,6 @@ func (h *H4) url(path string) string {
 func (h *H4) sign(request *http.Request) *http.Request {
 
 	request.Header.Set("User-Agent", "Cisco Tetration Go client")
-	request.Header.Set("Content-Type", "application/json")
 	request.Header.Set("Timestamp", time.Now().UTC().Format("2006-01-02T15:04:05-0700"))
 	request.Header.Set("Id", h.Key)
 
@@ -139,6 +140,7 @@ func (h *H4) Post(path string, json string) []byte {
 	if err != nil {
 		log.Fatal("NewRequest:", err)
 	}
+	req.Header.Set("Content-Type", "application/json")
 
 	// Hash needs to be performed here, or the reader will mark it as closed
 	// Can't read twice https://groups.google.com/forum/#!topic/golang-nuts/S6qQHDtoxgo
@@ -181,6 +183,7 @@ func (h *H4) Put(path string, json string) []byte {
 	if err != nil {
 		log.Fatal("NewRequest:", err)
 	}
+	req.Header.Set("Content-Type", "application/json")
 
 	// Hash needs to be performed here, or the reader will mark it as closed
 	// Can't read twice https://groups.google.com/forum/#!topic/golang-nuts/S6qQHDtoxgo
@@ -223,6 +226,7 @@ func (h *H4) Delete(path string, json string) []byte {
 	if err != nil {
 		log.Fatal("NewRequest:", err)
 	}
+	req.Header.Set("Content-Type", "application/json")
 
 	// Hash needs to be performed here, or the reader will mark it as closed
 	// Can't read twice https://groups.google.com/forum/#!topic/golang-nuts/S6qQHDtoxgo
@@ -243,4 +247,64 @@ func (h *H4) Delete(path string, json string) []byte {
 	}
 
 	return body
+}
+
+func (h *H4) Upload(data []byte, add bool, ipVrfKey bool) []byte {
+
+	header := make(textproto.MIMEHeader, 2)
+	header.Add("Content-Disposition", "form-data; name=\"file\"; filename=\"user_annotations.csv\"")
+	header.Add("Content-Type", "text/csv")
+
+	body := new(bytes.Buffer)
+	writer := multipart.NewWriter(body)
+	if ipVrfKey {
+		writer.WriteField("X‐Tetration‐Key", "[\"IP\", \"VRF\"]")
+	} else {
+		writer.WriteField("X‐Tetration‐Key", "[\"Hostname\"]")
+	}
+	if add {
+		writer.WriteField("X‐Tetration‐Oper", "add")
+	} else {
+		writer.WriteField("X‐Tetration‐Oper", "delete")
+	}
+
+	part, err := writer.CreatePart(header)
+	if err != nil {
+		log.Fatal("Could not create content body header part", err)
+	}
+	_, err = part.Write(data)
+	if err != nil {
+		log.Fatal("Could not write content body header part", err)
+	}
+	writer.Close()
+
+	insecureVerify := !h.Verify
+	tr := &http.Transport{
+		TLSClientConfig: &tls.Config{InsecureSkipVerify: insecureVerify},
+	}
+	client := &http.Client{Transport: tr}
+
+	fmt.Println(body.String())
+
+	url := h.url("/assets/cmdb/upload")
+	req, err := http.NewRequest("POST", url, body)
+	if err != nil {
+		log.Fatal("NewRequest:", err)
+	}
+
+	req.Header.Set("Content-Type", writer.FormDataContentType())
+	h.sign(req)
+
+	resp, err := client.Do(req)
+	if err != nil {
+		log.Fatal("Do:", err)
+	}
+	defer resp.Body.Close()
+
+	response_body, err := ioutil.ReadAll(resp.Body)
+	if err != nil {
+		log.Fatal("Readall:", err)
+	}
+
+	return response_body
 }
