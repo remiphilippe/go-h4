@@ -7,11 +7,11 @@ import (
 	"crypto/tls"
 	"encoding/base64"
 	"fmt"
+	"io"
 	"io/ioutil"
 	"log"
 	"mime/multipart"
 	"net/http"
-	"net/textproto"
 	"strings"
 	"time"
 )
@@ -251,31 +251,30 @@ func (h *H4) Delete(path string, json string) []byte {
 
 func (h *H4) Upload(data []byte, add bool, ipVrfKey bool) []byte {
 
-	header := make(textproto.MIMEHeader, 2)
-	header.Add("Content-Disposition", "form-data; name=\"file\"; filename=\"user_annotations.csv\"")
-	header.Add("Content-Type", "text/csv")
-
 	body := new(bytes.Buffer)
 	writer := multipart.NewWriter(body)
+	writer.SetBoundary("CiscoTetrationClient")
 	if ipVrfKey {
-		writer.WriteField("X‐Tetration‐Key", "[\"IP\", \"VRF\"]")
+		writer.WriteField("X-Tetration-Key", "[\"IP\", \"VRF\"]")
 	} else {
-		writer.WriteField("X‐Tetration‐Key", "[\"Hostname\"]")
+		writer.WriteField("X-Tetration-Key", "[\"Hostname\"]")
 	}
 	if add {
-		writer.WriteField("X‐Tetration‐Oper", "add")
+		writer.WriteField("X-Tetration-Oper", "add")
 	} else {
-		writer.WriteField("X‐Tetration‐Oper", "delete")
+		writer.WriteField("X-Tetration-Oper", "delete")
 	}
 
-	part, err := writer.CreatePart(header)
+	part, err := writer.CreateFormFile("file", "filename")
 	if err != nil {
-		log.Fatal("Could not create content body header part", err)
+		log.Fatal("Could not create multi-part form file header", err)
 	}
-	_, err = part.Write(data)
+
+	_, err = io.Copy(part, bytes.NewReader(data))
 	if err != nil {
-		log.Fatal("Could not write content body header part", err)
+		log.Fatal("Could not copy data into multi-part form part", err)
 	}
+
 	writer.Close()
 
 	insecureVerify := !h.Verify
@@ -283,8 +282,6 @@ func (h *H4) Upload(data []byte, add bool, ipVrfKey bool) []byte {
 		TLSClientConfig: &tls.Config{InsecureSkipVerify: insecureVerify},
 	}
 	client := &http.Client{Transport: tr}
-
-	fmt.Println(body.String())
 
 	url := h.url("/assets/cmdb/upload")
 	req, err := http.NewRequest("POST", url, body)
