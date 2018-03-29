@@ -3,8 +3,6 @@ package goh4
 import (
 	"encoding/json"
 	"fmt"
-
-	"github.com/golang/glog"
 )
 
 // Scope Structure holding a scope
@@ -28,19 +26,16 @@ func (s *Scope) GetParent() (*Scope, error) {
 func (h *H4) AddScope(s *Scope) (*Scope, error) {
 	jsonStr, err := json.Marshal(&s)
 	if err != nil {
-		glog.Errorf("Error Marshalling scope %s", err)
-		return nil, err
+		return nil, fmt.Errorf("Error Marshalling scope: %s", err.Error())
 	}
 	postResp, err := h.Post("/app_scopes", fmt.Sprintf("%s", jsonStr))
 	if err != nil {
-		glog.Errorf("POST error %s", err)
-		return nil, err
+		return nil, fmt.Errorf("POST error: %s / POST: %s", err.Error(), postResp)
 	}
 
 	err = json.Unmarshal(postResp, &s)
 	if err != nil {
-		glog.Errorf("Error unmarshalling json %s", err)
-		return nil, err
+		return nil, fmt.Errorf("Error unmarshalling JSON: %s / JSON: %s", err.Error(), postResp)
 	}
 
 	s.h4 = h
@@ -52,8 +47,7 @@ func (h *H4) AddScope(s *Scope) (*Scope, error) {
 func (h *H4) GetScope(id string) (*Scope, error) {
 	getResp, err := h.Get(fmt.Sprintf("/app_scopes/%s", id))
 	if err != nil {
-		glog.Errorf("GET error %s", err)
-		return nil, err
+		return nil, fmt.Errorf("GET error: %s / GET: %s", err.Error(), getResp)
 	}
 
 	var jsonResp *Scope
@@ -61,8 +55,7 @@ func (h *H4) GetScope(id string) (*Scope, error) {
 	//
 	err = json.Unmarshal(getResp, &jsonResp)
 	if err != nil {
-		glog.Errorf("Error unmarshalling json %s", err)
-		return nil, err
+		return nil, fmt.Errorf("Error unmarshalling JSON: %s / JSON: %s", err.Error(), getResp)
 	}
 
 	return jsonResp, nil
@@ -72,16 +65,14 @@ func (h *H4) GetScope(id string) (*Scope, error) {
 func (h *H4) GetAllScope() ([]*Scope, error) {
 	getResp, err := h.Get(fmt.Sprintf("/app_scopes"))
 	if err != nil {
-		glog.Errorf("GET error %s", err)
-		return nil, err
+		return nil, fmt.Errorf("GET error: %s / GET: %s", err.Error(), getResp)
 	}
 	//fmt.Printf("%s", getResp)
 
 	var jsonResp []*Scope
 	err = json.Unmarshal(getResp, &jsonResp)
 	if err != nil {
-		glog.Errorf("Error unmarshalling json %s", err)
-		return nil, err
+		return nil, fmt.Errorf("Error unmarshalling JSON: %s / JSON: %s", err.Error(), getResp)
 	}
 
 	return jsonResp, nil

@@ -4,8 +4,6 @@ import (
 	"encoding/json"
 	"fmt"
 	"net"
-
-	"github.com/golang/glog"
 )
 
 // Inventory Inventory structure holding a single inventory item
@@ -32,21 +30,18 @@ type Inventory struct {
 func (h *H4) InventorySearch(s *InventoryQuery) ([]Inventory, error) {
 	jsonStr, err := json.Marshal(&s)
 	if err != nil {
-		glog.Errorf("Error Marshalling search %s", err)
-		return nil, err
+		return nil, fmt.Errorf("Error Marshalling search: %s", err.Error())
 	}
 
 	postResp, err := h.Post("/inventory/search", fmt.Sprintf("%s", jsonStr))
 	if err != nil {
-		glog.Errorf("POST error %s", err)
-		return nil, err
+		return nil, fmt.Errorf("POST error: %s / POST: %s", err.Error(), postResp)
 	}
 
 	jsonResp := make(map[string][]Inventory)
 	err = json.Unmarshal(postResp, &jsonResp)
 	if err != nil {
-		glog.Errorf("Error unmarshalling json %s / content: %s", err, postResp)
-		return nil, err
+		return nil, fmt.Errorf("Error unmarshalling JSON: %s / JSON: %s", err.Error(), postResp)
 	}
 
 	return jsonResp["results"], nil

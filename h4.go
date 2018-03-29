@@ -12,8 +12,6 @@ import (
 	"net/http"
 	"strings"
 	"time"
-
-	"github.com/golang/glog"
 )
 
 func hashSHA256(content []byte) string {
@@ -52,15 +50,13 @@ func (h *H4) processRequest(req *http.Request) ([]byte, error) {
 
 	resp, err := client.Do(req)
 	if err != nil {
-		glog.Errorf("Request Processing Error: %s\n", err)
-		return nil, err
+		return nil, fmt.Errorf("Request Processing Error: %s\n", err)
 	}
 	defer resp.Body.Close()
 
 	body, err := ioutil.ReadAll(resp.Body)
 	if err != nil {
-		glog.Errorf("GET - ReadAll Error: %s\n", err)
-		return nil, err
+		return nil, fmt.Errorf("GET - ReadAll Error: %s\n", err)
 	}
 
 	switch resp.StatusCode {
@@ -148,8 +144,7 @@ func (h *H4) Get(path string) ([]byte, error) {
 
 	req, err := http.NewRequest("GET", url, nil)
 	if err != nil {
-		glog.Errorf("GET - NewRequest Error: %s\n", err)
-		return nil, err
+		return nil, fmt.Errorf("GET - NewRequest Error: %s\n", err)
 	}
 	h.sign(req)
 
@@ -164,8 +159,7 @@ func (h *H4) Post(path string, json string) ([]byte, error) {
 
 	req, err := http.NewRequest("POST", url, reader)
 	if err != nil {
-		glog.Errorf("POST - NewRequest Error: %s\n", err)
-		return nil, err
+		return nil, fmt.Errorf("POST - NewRequest Error: %s\n", err)
 	}
 	req.Header.Set("Content-Type", "application/json")
 
@@ -186,8 +180,7 @@ func (h *H4) Put(path string, json string) ([]byte, error) {
 
 	req, err := http.NewRequest("PUT", url, reader)
 	if err != nil {
-		glog.Errorf("PUT - NewRequest Error: %s\n", err)
-		return nil, err
+		return nil, fmt.Errorf("PUT - NewRequest Error: %s\n", err)
 	}
 	req.Header.Set("Content-Type", "application/json")
 
@@ -215,8 +208,7 @@ func (h *H4) Delete(path string, json string) error {
 		req, err = http.NewRequest("DELETE", url, nil)
 	}
 	if err != nil {
-		glog.Errorf("DELETE - NewRequest Error: %s\n", err)
-		return err
+		return fmt.Errorf("DELETE - NewRequest Error: %s\n", err)
 	}
 	req.Header.Set("Content-Type", "application/json")
 

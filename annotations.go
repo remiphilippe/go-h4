@@ -23,8 +23,7 @@ type Annotation struct {
 func (h *H4) AddAnnotation(a *Annotation) error {
 	jsonStr, err := json.Marshal(&a)
 	if err != nil {
-		glog.Errorf("GET error %s", err)
-		return err
+		return fmt.Errorf("Error Marshalling annotation: %s", err.Error())
 	}
 	h.Post(fmt.Sprintf("/inventory/tags/%s", a.Scope), fmt.Sprintf("%s", jsonStr))
 
@@ -35,8 +34,7 @@ func (h *H4) AddAnnotation(a *Annotation) error {
 func (h *H4) GetAnnotation(scope, query string) (*Annotation, error) {
 	getResp, err := h.Get(fmt.Sprintf("/inventory/tags/%s?ip=%s", scope, query))
 	if err != nil {
-		glog.Errorf("GET error %s", err)
-		return nil, err
+		return nil, fmt.Errorf("GET error: %s / GET: %s", err.Error(), getResp)
 	}
 
 	jsonResp := make(map[string]string)
