@@ -1,0 +1,3 @@
+package: github.com/remiphilippe/go-h4
+import:
+- package: github.com/golang/glog
