@@ -6,17 +6,15 @@ import (
 	"crypto/sha256"
 	"crypto/tls"
 	"encoding/base64"
+	"encoding/json"
 	"fmt"
-	"io"
 	"io/ioutil"
-	"log"
-	"mime/multipart"
 	"net/http"
 	"strings"
 	"time"
-)
 
-//var supportedMethods = []string{"GET", "POST", "PUT"}
+	"github.com/golang/glog"
+)
 
 func hashSHA256(content []byte) string {
 	h := sha256.New()
@@ -37,6 +35,68 @@ func checksum(content string, request *http.Request) *http.Request {
 	return request
 }
 
+func (h *H4) processRequest(req *http.Request) ([]byte, error) {
+	var insecureVerify bool
+	var err error
+
+	if h.Verify == false {
+		insecureVerify = true
+	} else {
+		insecureVerify = false
+	}
+
+	tr := &http.Transport{
+		TLSClientConfig: &tls.Config{InsecureSkipVerify: insecureVerify},
+	}
+	client := &http.Client{Transport: tr}
+
+	resp, err := client.Do(req)
+	if err != nil {
+		glog.Errorf("Request Processing Error: %s\n", err)
+		return nil, err
+	}
+	defer resp.Body.Close()
+
+	body, err := ioutil.ReadAll(resp.Body)
+	if err != nil {
+		glog.Errorf("GET - ReadAll Error: %s\n", err)
+		return nil, err
+	}
+
+	switch resp.StatusCode {
+	case 200:
+		err = nil
+	case 400:
+		contentType := resp.Header.Get("Content-Type")
+		s := strings.Split(contentType, ";")
+		header := strings.TrimSpace(s[0])
+
+		if header == "application/json" {
+			jsonResp := make(map[string]string)
+			err = json.Unmarshal(body, &jsonResp)
+			if err != nil {
+				return nil, err
+			}
+			err = fmt.Errorf("Request Error (%d): %s", resp.StatusCode, jsonResp["error"])
+		} else {
+			err = fmt.Errorf("Request Error (%d): %s", resp.StatusCode, body)
+		}
+	case 401:
+		err = fmt.Errorf("Authorization Error (%d): %s", resp.StatusCode, body)
+	case 403:
+		err = fmt.Errorf("Authentication Error (%d): %s", resp.StatusCode, body)
+	default:
+		err = fmt.Errorf("Other Error (%d): %s", resp.StatusCode, body)
+	}
+
+	if err != nil {
+		return nil, err
+	}
+
+	return body, nil
+}
+
+// H4 defines a structure for the Tetration OpenAPI
 type H4 struct {
 	Endpoint string
 	Prefix   string
@@ -75,7 +135,6 @@ func (h *H4) url(path string) string {
 }
 
 func (h *H4) sign(request *http.Request) *http.Request {
-
 	request.Header.Set("User-Agent", "Cisco Tetration Go client")
 	request.Header.Set("Timestamp", time.Now().UTC().Format("2006-01-02T15:04:05-0700"))
 	request.Header.Set("Id", h.Key)
@@ -83,62 +142,30 @@ func (h *H4) sign(request *http.Request) *http.Request {
 	return h.hash(request)
 }
 
-func (h *H4) Get(path string) []byte {
-	var insecureVerify bool
-
+// Get Perform a GET operation on Tetration OpenAPI
+func (h *H4) Get(path string) ([]byte, error) {
 	url := h.url(path)
-
-	if h.Verify == false {
-		insecureVerify = true
-	} else {
-		insecureVerify = false
-	}
-
-	tr := &http.Transport{
-		TLSClientConfig: &tls.Config{InsecureSkipVerify: insecureVerify},
-	}
-	client := &http.Client{Transport: tr}
 
 	req, err := http.NewRequest("GET", url, nil)
 	if err != nil {
-		log.Fatal("NewRequest:", err)
+		glog.Errorf("GET - NewRequest Error: %s\n", err)
+		return nil, err
 	}
 	h.sign(req)
 
-	resp, err := client.Do(req)
-	if err != nil {
-		log.Fatal("Do:", err)
-	}
-	defer resp.Body.Close()
-
-	body, err := ioutil.ReadAll(resp.Body)
-	if err != nil {
-		log.Fatal("Readall:", err)
-	}
-
-	return body
+	return h.processRequest(req)
 }
 
-func (h *H4) Post(path string, json string) []byte {
-	var insecureVerify bool
-
+// Post Perform a POST operation on Tetration OpenAPI
+func (h *H4) Post(path string, json string) ([]byte, error) {
 	url := h.url(path)
 
-	if h.Verify == false {
-		insecureVerify = true
-	} else {
-		insecureVerify = false
-	}
-
-	tr := &http.Transport{
-		TLSClientConfig: &tls.Config{InsecureSkipVerify: insecureVerify},
-	}
-	client := &http.Client{Transport: tr}
 	reader := strings.NewReader(json)
 
 	req, err := http.NewRequest("POST", url, reader)
 	if err != nil {
-		log.Fatal("NewRequest:", err)
+		glog.Errorf("POST - NewRequest Error: %s\n", err)
+		return nil, err
 	}
 	req.Header.Set("Content-Type", "application/json")
 
@@ -148,40 +175,19 @@ func (h *H4) Post(path string, json string) []byte {
 
 	h.sign(req)
 
-	resp, err := client.Do(req)
-	if err != nil {
-		log.Fatal("Do:", err)
-	}
-	defer resp.Body.Close()
-
-	body, err := ioutil.ReadAll(resp.Body)
-	if err != nil {
-		log.Fatal("Readall:", err)
-	}
-
-	return body
+	return h.processRequest(req)
 }
 
-func (h *H4) Put(path string, json string) []byte {
-	var insecureVerify bool
-
+// Put Perform a PUT operation on Tetration OpenAPI
+func (h *H4) Put(path string, json string) ([]byte, error) {
 	url := h.url(path)
 
-	if h.Verify == false {
-		insecureVerify = true
-	} else {
-		insecureVerify = false
-	}
-
-	tr := &http.Transport{
-		TLSClientConfig: &tls.Config{InsecureSkipVerify: insecureVerify},
-	}
-	client := &http.Client{Transport: tr}
 	reader := strings.NewReader(json)
 
 	req, err := http.NewRequest("PUT", url, reader)
 	if err != nil {
-		log.Fatal("NewRequest:", err)
+		glog.Errorf("PUT - NewRequest Error: %s\n", err)
+		return nil, err
 	}
 	req.Header.Set("Content-Type", "application/json")
 
@@ -191,40 +197,26 @@ func (h *H4) Put(path string, json string) []byte {
 
 	h.sign(req)
 
-	resp, err := client.Do(req)
-	if err != nil {
-		log.Fatal("Do:", err)
-	}
-	defer resp.Body.Close()
-
-	body, err := ioutil.ReadAll(resp.Body)
-	if err != nil {
-		log.Fatal("Readall:", err)
-	}
-
-	return body
+	return h.processRequest(req)
 }
 
-func (h *H4) Delete(path string, json string) []byte {
-	var insecureVerify bool
+// Delete Perform a DELETE operation on Tetration OpenAPI
+func (h *H4) Delete(path string, json string) error {
+	var err error
+	var req *http.Request
 
 	url := h.url(path)
 
-	if h.Verify == false {
-		insecureVerify = true
+	if json != "" {
+		reader := strings.NewReader(json)
+
+		req, err = http.NewRequest("DELETE", url, reader)
 	} else {
-		insecureVerify = false
+		req, err = http.NewRequest("DELETE", url, nil)
 	}
-
-	tr := &http.Transport{
-		TLSClientConfig: &tls.Config{InsecureSkipVerify: insecureVerify},
-	}
-	client := &http.Client{Transport: tr}
-	reader := strings.NewReader(json)
-
-	req, err := http.NewRequest("DELETE", url, reader)
 	if err != nil {
-		log.Fatal("NewRequest:", err)
+		glog.Errorf("DELETE - NewRequest Error: %s\n", err)
+		return err
 	}
 	req.Header.Set("Content-Type", "application/json")
 
@@ -235,73 +227,10 @@ func (h *H4) Delete(path string, json string) []byte {
 
 	h.sign(req)
 
-	resp, err := client.Do(req)
+	_, err = h.processRequest(req)
 	if err != nil {
-		log.Fatal("Do:", err)
-	}
-	defer resp.Body.Close()
-
-	body, err := ioutil.ReadAll(resp.Body)
-	if err != nil {
-		log.Fatal("Readall:", err)
+		return err
 	}
 
-	return body
-}
-
-func (h *H4) Upload(data []byte, add bool, ipVrfKey bool) []byte {
-
-	body := new(bytes.Buffer)
-	writer := multipart.NewWriter(body)
-	writer.SetBoundary("CiscoTetrationClient")
-	if ipVrfKey {
-		writer.WriteField("X-Tetration-Key", "[\"IP\", \"VRF\"]")
-	} else {
-		writer.WriteField("X-Tetration-Key", "[\"Hostname\"]")
-	}
-	if add {
-		writer.WriteField("X-Tetration-Oper", "add")
-	} else {
-		writer.WriteField("X-Tetration-Oper", "delete")
-	}
-
-	part, err := writer.CreateFormFile("file", "filename")
-	if err != nil {
-		log.Fatal("Could not create multi-part form file header", err)
-	}
-
-	_, err = io.Copy(part, bytes.NewReader(data))
-	if err != nil {
-		log.Fatal("Could not copy data into multi-part form part", err)
-	}
-
-	writer.Close()
-
-	insecureVerify := !h.Verify
-	tr := &http.Transport{
-		TLSClientConfig: &tls.Config{InsecureSkipVerify: insecureVerify},
-	}
-	client := &http.Client{Transport: tr}
-
-	url := h.url("/assets/cmdb/upload")
-	req, err := http.NewRequest("POST", url, body)
-	if err != nil {
-		log.Fatal("NewRequest:", err)
-	}
-
-	req.Header.Set("Content-Type", writer.FormDataContentType())
-	h.sign(req)
-
-	resp, err := client.Do(req)
-	if err != nil {
-		log.Fatal("Do:", err)
-	}
-	defer resp.Body.Close()
-
-	response_body, err := ioutil.ReadAll(resp.Body)
-	if err != nil {
-		log.Fatal("Readall:", err)
-	}
-
-	return response_body
+	return nil
 }

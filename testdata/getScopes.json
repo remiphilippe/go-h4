@@ -1,0 +1,3365 @@
+[
+  {
+    "filter_type": "AppScope",
+    "id": "5aa6e27e497d4f3d90c6c385",
+    "name": "Unknown",
+    "description": null,
+    "short_name": "Unknown",
+    "priority": "000:Z",
+    "short_priority": 0,
+    "policy_priority": 1,
+    "query": {
+      "type": "eq",
+      "field": "vrf_id",
+      "value": 0
+    },
+    "short_query": {
+      "type": "eq",
+      "field": "vrf_id",
+      "value": 0
+    },
+    "dirty": false,
+    "dirty_short_query": null,
+    "vrf_id": 0,
+    "parent_app_scope_id": "",
+    "child_app_scope_ids": []
+  },
+  {
+    "filter_type": "AppScope",
+    "id": "5aa6f03c497d4f3c9a2454c7",
+    "name": "Default:AWS:Struts",
+    "description": null,
+    "short_name": "Struts",
+    "priority": "001:001:001:Z",
+    "short_priority": 1,
+    "policy_priority": 5,
+    "query": {
+      "type": "and",
+      "filters": [
+        {
+          "field": "vrf_id",
+          "type": "eq",
+          "value": 1
+        },
+        {
+          "field": "ip",
+          "type": "subnet",
+          "value": "10.0.0.0/16"
+        },
+        {
+          "field": "user_scope",
+          "type": "eq",
+          "value": "struts"
+        }
+      ]
+    },
+    "short_query": {
+      "type": "eq",
+      "field": "user_scope",
+      "value": "struts"
+    },
+    "dirty": false,
+    "dirty_short_query": null,
+    "vrf_id": 1,
+    "parent_app_scope_id": "5aa6eed0755f023c424218f1",
+    "child_app_scope_ids": []
+  },
+  {
+    "filter_type": "AppScope",
+    "id": "5aa6eed0755f023c424218f1",
+    "name": "Default:AWS",
+    "description": null,
+    "short_name": "AWS",
+    "priority": "001:001:Z",
+    "short_priority": 1,
+    "policy_priority": 2,
+    "query": {
+      "type": "and",
+      "filters": [
+        {
+          "field": "vrf_id",
+          "type": "eq",
+          "value": 1
+        },
+        {
+          "field": "ip",
+          "type": "subnet",
+          "value": "10.0.0.0/16"
+        }
+      ]
+    },
+    "short_query": {
+      "type": "subnet",
+      "field": "ip",
+      "value": "10.0.0.0/16"
+    },
+    "dirty": false,
+    "dirty_short_query": null,
+    "vrf_id": 1,
+    "parent_app_scope_id": "5aa6e27e497d4f3d90c6c38e",
+    "child_app_scope_ids": [
+      "5aa6f03c497d4f3c9a2454c7"
+    ]
+  },
+  {
+    "filter_type": "AppScope",
+    "id": "5aa6f09d755f023c4b4218f1",
+    "name": "Default:SJC15:Training PODs:POD01",
+    "description": null,
+    "short_name": "POD01",
+    "priority": "001:002:001:001:Z",
+    "short_priority": 1,
+    "policy_priority": 8,
+    "query": {
+      "type": "and",
+      "filters": [
+        {
+          "field": "vrf_id",
+          "type": "eq",
+          "value": 1
+        },
+        {
+          "type": "or",
+          "filters": [
+            {
+              "field": "ip",
+              "type": "subnet",
+              "value": "172.20.0.0/16"
+            },
+            {
+              "field": "ip",
+              "type": "subnet",
+              "value": "172.21.0.0/16"
+            }
+          ]
+        },
+        {
+          "field": "ip",
+          "type": "subnet",
+          "value": "172.21.0.0/16"
+        },
+        {
+          "field": "user_scope",
+          "type": "eq",
+          "value": "pod01"
+        }
+      ]
+    },
+    "short_query": {
+      "type": "eq",
+      "field": "user_scope",
+      "value": "pod01"
+    },
+    "dirty": false,
+    "dirty_short_query": null,
+    "vrf_id": 1,
+    "parent_app_scope_id": "5aa6ef0d497d4f3c972454cd",
+    "child_app_scope_ids": []
+  },
+  {
+    "filter_type": "AppScope",
+    "id": "5aa6f0a5497d4f3c9a2454c9",
+    "name": "Default:SJC15:Training PODs:POD02",
+    "description": null,
+    "short_name": "POD02",
+    "priority": "001:002:001:002:Z",
+    "short_priority": 2,
+    "policy_priority": 9,
+    "query": {
+      "type": "and",
+      "filters": [
+        {
+          "field": "vrf_id",
+          "type": "eq",
+          "value": 1
+        },
+        {
+          "type": "or",
+          "filters": [
+            {
+              "field": "ip",
+              "type": "subnet",
+              "value": "172.20.0.0/16"
+            },
+            {
+              "field": "ip",
+              "type": "subnet",
+              "value": "172.21.0.0/16"
+            }
+          ]
+        },
+        {
+          "field": "ip",
+          "type": "subnet",
+          "value": "172.21.0.0/16"
+        },
+        {
+          "field": "user_scope",
+          "type": "eq",
+          "value": "pod02"
+        }
+      ]
+    },
+    "short_query": {
+      "type": "eq",
+      "field": "user_scope",
+      "value": "pod02"
+    },
+    "dirty": false,
+    "dirty_short_query": null,
+    "vrf_id": 1,
+    "parent_app_scope_id": "5aa6ef0d497d4f3c972454cd",
+    "child_app_scope_ids": []
+  },
+  {
+    "filter_type": "AppScope",
+    "id": "5aa6f0ad497d4f3c9a2454cb",
+    "name": "Default:SJC15:Training PODs:POD03",
+    "description": null,
+    "short_name": "POD03",
+    "priority": "001:002:001:003:Z",
+    "short_priority": 3,
+    "policy_priority": 10,
+    "query": {
+      "type": "and",
+      "filters": [
+        {
+          "field": "vrf_id",
+          "type": "eq",
+          "value": 1
+        },
+        {
+          "type": "or",
+          "filters": [
+            {
+              "field": "ip",
+              "type": "subnet",
+              "value": "172.20.0.0/16"
+            },
+            {
+              "field": "ip",
+              "type": "subnet",
+              "value": "172.21.0.0/16"
+            }
+          ]
+        },
+        {
+          "field": "ip",
+          "type": "subnet",
+          "value": "172.21.0.0/16"
+        },
+        {
+          "field": "user_scope",
+          "type": "eq",
+          "value": "pod03"
+        }
+      ]
+    },
+    "short_query": {
+      "type": "eq",
+      "field": "user_scope",
+      "value": "pod03"
+    },
+    "dirty": false,
+    "dirty_short_query": null,
+    "vrf_id": 1,
+    "parent_app_scope_id": "5aa6ef0d497d4f3c972454cd",
+    "child_app_scope_ids": []
+  },
+  {
+    "filter_type": "AppScope",
+    "id": "5aa6f0b6497d4f3c9a2454cd",
+    "name": "Default:SJC15:Training PODs:POD04",
+    "description": null,
+    "short_name": "POD04",
+    "priority": "001:002:001:004:Z",
+    "short_priority": 4,
+    "policy_priority": 11,
+    "query": {
+      "type": "and",
+      "filters": [
+        {
+          "field": "vrf_id",
+          "type": "eq",
+          "value": 1
+        },
+        {
+          "type": "or",
+          "filters": [
+            {
+              "field": "ip",
+              "type": "subnet",
+              "value": "172.20.0.0/16"
+            },
+            {
+              "field": "ip",
+              "type": "subnet",
+              "value": "172.21.0.0/16"
+            }
+          ]
+        },
+        {
+          "field": "ip",
+          "type": "subnet",
+          "value": "172.21.0.0/16"
+        },
+        {
+          "field": "user_scope",
+          "type": "eq",
+          "value": "pod04"
+        }
+      ]
+    },
+    "short_query": {
+      "type": "eq",
+      "field": "user_scope",
+      "value": "pod04"
+    },
+    "dirty": false,
+    "dirty_short_query": null,
+    "vrf_id": 1,
+    "parent_app_scope_id": "5aa6ef0d497d4f3c972454cd",
+    "child_app_scope_ids": []
+  },
+  {
+    "filter_type": "AppScope",
+    "id": "5aa6f0bd497d4f3c9a2454cf",
+    "name": "Default:SJC15:Training PODs:POD05",
+    "description": null,
+    "short_name": "POD05",
+    "priority": "001:002:001:005:Z",
+    "short_priority": 5,
+    "policy_priority": 12,
+    "query": {
+      "type": "and",
+      "filters": [
+        {
+          "field": "vrf_id",
+          "type": "eq",
+          "value": 1
+        },
+        {
+          "type": "or",
+          "filters": [
+            {
+              "field": "ip",
+              "type": "subnet",
+              "value": "172.20.0.0/16"
+            },
+            {
+              "field": "ip",
+              "type": "subnet",
+              "value": "172.21.0.0/16"
+            }
+          ]
+        },
+        {
+          "field": "ip",
+          "type": "subnet",
+          "value": "172.21.0.0/16"
+        },
+        {
+          "field": "user_scope",
+          "type": "eq",
+          "value": "pod05"
+        }
+      ]
+    },
+    "short_query": {
+      "type": "eq",
+      "field": "user_scope",
+      "value": "pod05"
+    },
+    "dirty": false,
+    "dirty_short_query": null,
+    "vrf_id": 1,
+    "parent_app_scope_id": "5aa6ef0d497d4f3c972454cd",
+    "child_app_scope_ids": []
+  },
+  {
+    "filter_type": "AppScope",
+    "id": "5aa6f0c8497d4f3c912454c7",
+    "name": "Default:SJC15:Training PODs:POD06",
+    "description": null,
+    "short_name": "POD06",
+    "priority": "001:002:001:006:Z",
+    "short_priority": 6,
+    "policy_priority": 13,
+    "query": {
+      "type": "and",
+      "filters": [
+        {
+          "field": "vrf_id",
+          "type": "eq",
+          "value": 1
+        },
+        {
+          "type": "or",
+          "filters": [
+            {
+              "field": "ip",
+              "type": "subnet",
+              "value": "172.20.0.0/16"
+            },
+            {
+              "field": "ip",
+              "type": "subnet",
+              "value": "172.21.0.0/16"
+            }
+          ]
+        },
+        {
+          "field": "ip",
+          "type": "subnet",
+          "value": "172.21.0.0/16"
+        },
+        {
+          "field": "user_scope",
+          "type": "eq",
+          "value": "pod06"
+        }
+      ]
+    },
+    "short_query": {
+      "type": "eq",
+      "field": "user_scope",
+      "value": "pod06"
+    },
+    "dirty": false,
+    "dirty_short_query": null,
+    "vrf_id": 1,
+    "parent_app_scope_id": "5aa6ef0d497d4f3c972454cd",
+    "child_app_scope_ids": []
+  },
+  {
+    "filter_type": "AppScope",
+    "id": "5aa6f0d0755f023c454218f2",
+    "name": "Default:SJC15:Training PODs:POD07",
+    "description": null,
+    "short_name": "POD07",
+    "priority": "001:002:001:007:Z",
+    "short_priority": 7,
+    "policy_priority": 14,
+    "query": {
+      "type": "and",
+      "filters": [
+        {
+          "field": "vrf_id",
+          "type": "eq",
+          "value": 1
+        },
+        {
+          "type": "or",
+          "filters": [
+            {
+              "field": "ip",
+              "type": "subnet",
+              "value": "172.20.0.0/16"
+            },
+            {
+              "field": "ip",
+              "type": "subnet",
+              "value": "172.21.0.0/16"
+            }
+          ]
+        },
+        {
+          "field": "ip",
+          "type": "subnet",
+          "value": "172.21.0.0/16"
+        },
+        {
+          "field": "user_scope",
+          "type": "eq",
+          "value": "pod07"
+        }
+      ]
+    },
+    "short_query": {
+      "type": "eq",
+      "field": "user_scope",
+      "value": "pod07"
+    },
+    "dirty": false,
+    "dirty_short_query": null,
+    "vrf_id": 1,
+    "parent_app_scope_id": "5aa6ef0d497d4f3c972454cd",
+    "child_app_scope_ids": []
+  },
+  {
+    "filter_type": "AppScope",
+    "id": "5aa6f0d8755f023c484218f1",
+    "name": "Default:SJC15:Training PODs:POD08",
+    "description": null,
+    "short_name": "POD08",
+    "priority": "001:002:001:008:Z",
+    "short_priority": 8,
+    "policy_priority": 15,
+    "query": {
+      "type": "and",
+      "filters": [
+        {
+          "field": "vrf_id",
+          "type": "eq",
+          "value": 1
+        },
+        {
+          "type": "or",
+          "filters": [
+            {
+              "field": "ip",
+              "type": "subnet",
+              "value": "172.20.0.0/16"
+            },
+            {
+              "field": "ip",
+              "type": "subnet",
+              "value": "172.21.0.0/16"
+            }
+          ]
+        },
+        {
+          "field": "ip",
+          "type": "subnet",
+          "value": "172.21.0.0/16"
+        },
+        {
+          "field": "user_scope",
+          "type": "eq",
+          "value": "pod08"
+        }
+      ]
+    },
+    "short_query": {
+      "type": "eq",
+      "field": "user_scope",
+      "value": "pod08"
+    },
+    "dirty": false,
+    "dirty_short_query": null,
+    "vrf_id": 1,
+    "parent_app_scope_id": "5aa6ef0d497d4f3c972454cd",
+    "child_app_scope_ids": []
+  },
+  {
+    "filter_type": "AppScope",
+    "id": "5aa6f0df755f023c484218f3",
+    "name": "Default:SJC15:Training PODs:POD09",
+    "description": null,
+    "short_name": "POD09",
+    "priority": "001:002:001:009:Z",
+    "short_priority": 9,
+    "policy_priority": 16,
+    "query": {
+      "type": "and",
+      "filters": [
+        {
+          "field": "vrf_id",
+          "type": "eq",
+          "value": 1
+        },
+        {
+          "type": "or",
+          "filters": [
+            {
+              "field": "ip",
+              "type": "subnet",
+              "value": "172.20.0.0/16"
+            },
+            {
+              "field": "ip",
+              "type": "subnet",
+              "value": "172.21.0.0/16"
+            }
+          ]
+        },
+        {
+          "field": "ip",
+          "type": "subnet",
+          "value": "172.21.0.0/16"
+        },
+        {
+          "field": "user_scope",
+          "type": "eq",
+          "value": "pod09"
+        }
+      ]
+    },
+    "short_query": {
+      "type": "eq",
+      "field": "user_scope",
+      "value": "pod09"
+    },
+    "dirty": false,
+    "dirty_short_query": null,
+    "vrf_id": 1,
+    "parent_app_scope_id": "5aa6ef0d497d4f3c972454cd",
+    "child_app_scope_ids": []
+  },
+  {
+    "filter_type": "AppScope",
+    "id": "5aa6f0ef497d4f3c972454cf",
+    "name": "Default:SJC15:Training PODs:POD10",
+    "description": null,
+    "short_name": "POD10",
+    "priority": "001:002:001:010:Z",
+    "short_priority": 10,
+    "policy_priority": 17,
+    "query": {
+      "type": "and",
+      "filters": [
+        {
+          "field": "vrf_id",
+          "type": "eq",
+          "value": 1
+        },
+        {
+          "type": "or",
+          "filters": [
+            {
+              "field": "ip",
+              "type": "subnet",
+              "value": "172.20.0.0/16"
+            },
+            {
+              "field": "ip",
+              "type": "subnet",
+              "value": "172.21.0.0/16"
+            }
+          ]
+        },
+        {
+          "field": "ip",
+          "type": "subnet",
+          "value": "172.21.0.0/16"
+        },
+        {
+          "field": "user_scope",
+          "type": "eq",
+          "value": "pod10"
+        }
+      ]
+    },
+    "short_query": {
+      "type": "eq",
+      "field": "user_scope",
+      "value": "pod10"
+    },
+    "dirty": false,
+    "dirty_short_query": null,
+    "vrf_id": 1,
+    "parent_app_scope_id": "5aa6ef0d497d4f3c972454cd",
+    "child_app_scope_ids": []
+  },
+  {
+    "filter_type": "AppScope",
+    "id": "5aa6f0fb755f023c424218f3",
+    "name": "Default:SJC15:Training PODs:Shared POD",
+    "description": null,
+    "short_name": "Shared POD",
+    "priority": "001:002:001:011:Z",
+    "short_priority": 11,
+    "policy_priority": 7,
+    "query": {
+      "type": "and",
+      "filters": [
+        {
+          "field": "vrf_id",
+          "type": "eq",
+          "value": 1
+        },
+        {
+          "type": "or",
+          "filters": [
+            {
+              "field": "ip",
+              "type": "subnet",
+              "value": "172.20.0.0/16"
+            },
+            {
+              "field": "ip",
+              "type": "subnet",
+              "value": "172.21.0.0/16"
+            }
+          ]
+        },
+        {
+          "field": "ip",
+          "type": "subnet",
+          "value": "172.21.0.0/16"
+        },
+        {
+          "field": "user_scope",
+          "type": "eq",
+          "value": "shared"
+        }
+      ]
+    },
+    "short_query": {
+      "type": "eq",
+      "field": "user_scope",
+      "value": "shared"
+    },
+    "dirty": false,
+    "dirty_short_query": null,
+    "vrf_id": 1,
+    "parent_app_scope_id": "5aa6ef0d497d4f3c972454cd",
+    "child_app_scope_ids": []
+  },
+  {
+    "filter_type": "AppScope",
+    "id": "5aa6ef0d497d4f3c972454cd",
+    "name": "Default:SJC15:Training PODs",
+    "description": null,
+    "short_name": "Training PODs",
+    "priority": "001:002:001:Z",
+    "short_priority": 1,
+    "policy_priority": 4,
+    "query": {
+      "type": "and",
+      "filters": [
+        {
+          "field": "vrf_id",
+          "type": "eq",
+          "value": 1
+        },
+        {
+          "type": "or",
+          "filters": [
+            {
+              "field": "ip",
+              "type": "subnet",
+              "value": "172.20.0.0/16"
+            },
+            {
+              "field": "ip",
+              "type": "subnet",
+              "value": "172.21.0.0/16"
+            }
+          ]
+        },
+        {
+          "field": "ip",
+          "type": "subnet",
+          "value": "172.21.0.0/16"
+        }
+      ]
+    },
+    "short_query": {
+      "type": "subnet",
+      "field": "ip",
+      "value": "172.21.0.0/16"
+    },
+    "dirty": false,
+    "dirty_short_query": null,
+    "vrf_id": 1,
+    "parent_app_scope_id": "5aa6eefc497d4f3c972454cb",
+    "child_app_scope_ids": [
+      "5aa6f09d755f023c4b4218f1",
+      "5aa6f0a5497d4f3c9a2454c9",
+      "5aa6f0ad497d4f3c9a2454cb",
+      "5aa6f0b6497d4f3c9a2454cd",
+      "5aa6f0bd497d4f3c9a2454cf",
+      "5aa6f0c8497d4f3c912454c7",
+      "5aa6f0d0755f023c454218f2",
+      "5aa6f0d8755f023c484218f1",
+      "5aa6f0df755f023c484218f3",
+      "5aa6f0ef497d4f3c972454cf",
+      "5aa6f0fb755f023c424218f3"
+    ]
+  },
+  {
+    "filter_type": "AppScope",
+    "id": "5aa6f123497d4f3c972454d1",
+    "name": "Default:SJC15:Lab Infrastructure",
+    "description": null,
+    "short_name": "Lab Infrastructure",
+    "priority": "001:002:002:Z",
+    "short_priority": 2,
+    "policy_priority": 6,
+    "query": {
+      "type": "and",
+      "filters": [
+        {
+          "field": "vrf_id",
+          "type": "eq",
+          "value": 1
+        },
+        {
+          "type": "or",
+          "filters": [
+            {
+              "field": "ip",
+              "type": "subnet",
+              "value": "172.20.0.0/16"
+            },
+            {
+              "field": "ip",
+              "type": "subnet",
+              "value": "172.21.0.0/16"
+            }
+          ]
+        },
+        {
+          "field": "ip",
+          "type": "subnet",
+          "value": "172.20.0.0/16"
+        }
+      ]
+    },
+    "short_query": {
+      "type": "subnet",
+      "field": "ip",
+      "value": "172.20.0.0/16"
+    },
+    "dirty": false,
+    "dirty_short_query": null,
+    "vrf_id": 1,
+    "parent_app_scope_id": "5aa6eefc497d4f3c972454cb",
+    "child_app_scope_ids": []
+  },
+  {
+    "filter_type": "AppScope",
+    "id": "5aa77647755f023c42421902",
+    "name": "Default:SJC15:Attack Demo",
+    "description": null,
+    "short_name": "Attack Demo",
+    "priority": "001:002:003:Z",
+    "short_priority": 3,
+    "policy_priority": 18,
+    "query": {
+      "type": "and",
+      "filters": [
+        {
+          "field": "vrf_id",
+          "type": "eq",
+          "value": 1
+        },
+        {
+          "type": "or",
+          "filters": [
+            {
+              "field": "ip",
+              "type": "subnet",
+              "value": "172.20.0.0/16"
+            },
+            {
+              "field": "ip",
+              "type": "subnet",
+              "value": "172.21.0.0/16"
+            }
+          ]
+        },
+        {
+          "field": "host_name",
+          "type": "eq",
+          "value": "centos7-rephilip"
+        }
+      ]
+    },
+    "short_query": {
+      "type": "eq",
+      "field": "host_name",
+      "value": "centos7-rephilip"
+    },
+    "dirty": false,
+    "dirty_short_query": null,
+    "vrf_id": 1,
+    "parent_app_scope_id": "5aa6eefc497d4f3c972454cb",
+    "child_app_scope_ids": []
+  },
+  {
+    "filter_type": "AppScope",
+    "id": "5aa6eefc497d4f3c972454cb",
+    "name": "Default:SJC15",
+    "description": null,
+    "short_name": "SJC15",
+    "priority": "001:002:Z",
+    "short_priority": 2,
+    "policy_priority": 3,
+    "query": {
+      "type": "and",
+      "filters": [
+        {
+          "field": "vrf_id",
+          "type": "eq",
+          "value": 1
+        },
+        {
+          "type": "or",
+          "filters": [
+            {
+              "field": "ip",
+              "type": "subnet",
+              "value": "172.20.0.0/16"
+            },
+            {
+              "field": "ip",
+              "type": "subnet",
+              "value": "172.21.0.0/16"
+            }
+          ]
+        }
+      ]
+    },
+    "short_query": {
+      "type": "or",
+      "filters": [
+        {
+          "type": "subnet",
+          "field": "ip",
+          "value": "172.20.0.0/16"
+        },
+        {
+          "type": "subnet",
+          "field": "ip",
+          "value": "172.21.0.0/16"
+        }
+      ]
+    },
+    "dirty": false,
+    "dirty_short_query": null,
+    "vrf_id": 1,
+    "parent_app_scope_id": "5aa6e27e497d4f3d90c6c38e",
+    "child_app_scope_ids": [
+      "5aa6ef0d497d4f3c972454cd",
+      "5aa6f123497d4f3c972454d1",
+      "5aa77647755f023c42421902"
+    ]
+  },
+  {
+    "filter_type": "AppScope",
+    "id": "5aa6e27e497d4f3d90c6c38e",
+    "name": "Default",
+    "description": null,
+    "short_name": "Default",
+    "priority": "001:Z",
+    "short_priority": 1,
+    "policy_priority": 1,
+    "query": {
+      "type": "eq",
+      "field": "vrf_id",
+      "value": 1
+    },
+    "short_query": {
+      "type": "eq",
+      "field": "vrf_id",
+      "value": 1
+    },
+    "dirty": false,
+    "dirty_short_query": null,
+    "vrf_id": 1,
+    "parent_app_scope_id": "",
+    "child_app_scope_ids": [
+      "5aa6eed0755f023c424218f1",
+      "5aa6eefc497d4f3c972454cb"
+    ]
+  },
+  {
+    "filter_type": "AppScope",
+    "id": "5aa6e28b497d4f3f820310ea",
+    "name": "Tetration:Adhoc:AdhocKafka",
+    "description": null,
+    "short_name": "AdhocKafka",
+    "priority": "002:001:001:Z",
+    "short_priority": 1,
+    "policy_priority": 3,
+    "query": {
+      "type": "and",
+      "filters": [
+        {
+          "field": "vrf_id",
+          "type": "eq",
+          "value": 676767
+        },
+        {
+          "field": "host_name",
+          "type": "contains",
+          "value": "adhoc"
+        },
+        {
+          "field": "host_name",
+          "type": "contains",
+          "value": "adhocKafka"
+        }
+      ]
+    },
+    "short_query": {
+      "type": "contains",
+      "field": "host_name",
+      "value": "adhocKafka"
+    },
+    "dirty": false,
+    "dirty_short_query": null,
+    "vrf_id": 676767,
+    "parent_app_scope_id": "5aa6e28b497d4f3f820310e8",
+    "child_app_scope_ids": []
+  },
+  {
+    "filter_type": "AppScope",
+    "id": "5aa6e28b497d4f3f820310ec",
+    "name": "Tetration:Adhoc:AdhocServers",
+    "description": null,
+    "short_name": "AdhocServers",
+    "priority": "002:001:002:Z",
+    "short_priority": 2,
+    "policy_priority": 4,
+    "query": {
+      "type": "and",
+      "filters": [
+        {
+          "field": "vrf_id",
+          "type": "eq",
+          "value": 676767
+        },
+        {
+          "field": "host_name",
+          "type": "contains",
+          "value": "adhoc"
+        },
+        {
+          "field": "host_name",
+          "type": "contains",
+          "value": "adhoc-"
+        }
+      ]
+    },
+    "short_query": {
+      "type": "contains",
+      "field": "host_name",
+      "value": "adhoc-"
+    },
+    "dirty": false,
+    "dirty_short_query": null,
+    "vrf_id": 676767,
+    "parent_app_scope_id": "5aa6e28b497d4f3f820310e8",
+    "child_app_scope_ids": []
+  },
+  {
+    "filter_type": "AppScope",
+    "id": "5aa6e28b497d4f3f820310e8",
+    "name": "Tetration:Adhoc",
+    "description": null,
+    "short_name": "Adhoc",
+    "priority": "002:001:Z",
+    "short_priority": 1,
+    "policy_priority": 2,
+    "query": {
+      "type": "and",
+      "filters": [
+        {
+          "field": "vrf_id",
+          "type": "eq",
+          "value": 676767
+        },
+        {
+          "field": "host_name",
+          "type": "contains",
+          "value": "adhoc"
+        }
+      ]
+    },
+    "short_query": {
+      "type": "contains",
+      "field": "host_name",
+      "value": "adhoc"
+    },
+    "dirty": false,
+    "dirty_short_query": null,
+    "vrf_id": 676767,
+    "parent_app_scope_id": "5aa6e27e497d4f3d90c6c398",
+    "child_app_scope_ids": [
+      "5aa6e28b497d4f3f820310ea",
+      "5aa6e28b497d4f3f820310ec"
+    ]
+  },
+  {
+    "filter_type": "AppScope",
+    "id": "5aa6e28c497d4f3f820310f0",
+    "name": "Tetration:FrontEnd:ElasticSearch",
+    "description": null,
+    "short_name": "ElasticSearch",
+    "priority": "002:002:001:Z",
+    "short_priority": 1,
+    "policy_priority": 6,
+    "query": {
+      "type": "and",
+      "filters": [
+        {
+          "field": "vrf_id",
+          "type": "eq",
+          "value": 676767
+        },
+        {
+          "type": "or",
+          "filters": [
+            {
+              "field": "host_name",
+              "type": "contains",
+              "value": "appServer"
+            },
+            {
+              "field": "host_name",
+              "type": "contains",
+              "value": "elastic"
+            },
+            {
+              "field": "host_name",
+              "type": "contains",
+              "value": "redis"
+            },
+            {
+              "field": "host_name",
+              "type": "contains",
+              "value": "mongo"
+            }
+          ]
+        },
+        {
+          "field": "host_name",
+          "type": "contains",
+          "value": "elastic"
+        }
+      ]
+    },
+    "short_query": {
+      "type": "contains",
+      "field": "host_name",
+      "value": "elastic"
+    },
+    "dirty": false,
+    "dirty_short_query": null,
+    "vrf_id": 676767,
+    "parent_app_scope_id": "5aa6e28b497d4f3f820310ee",
+    "child_app_scope_ids": []
+  },
+  {
+    "filter_type": "AppScope",
+    "id": "5aa6e28c497d4f3f820310f2",
+    "name": "Tetration:FrontEnd:Redis",
+    "description": null,
+    "short_name": "Redis",
+    "priority": "002:002:002:Z",
+    "short_priority": 2,
+    "policy_priority": 7,
+    "query": {
+      "type": "and",
+      "filters": [
+        {
+          "field": "vrf_id",
+          "type": "eq",
+          "value": 676767
+        },
+        {
+          "type": "or",
+          "filters": [
+            {
+              "field": "host_name",
+              "type": "contains",
+              "value": "appServer"
+            },
+            {
+              "field": "host_name",
+              "type": "contains",
+              "value": "elastic"
+            },
+            {
+              "field": "host_name",
+              "type": "contains",
+              "value": "redis"
+            },
+            {
+              "field": "host_name",
+              "type": "contains",
+              "value": "mongo"
+            }
+          ]
+        },
+        {
+          "field": "host_name",
+          "type": "contains",
+          "value": "redis"
+        }
+      ]
+    },
+    "short_query": {
+      "type": "contains",
+      "field": "host_name",
+      "value": "redis"
+    },
+    "dirty": false,
+    "dirty_short_query": null,
+    "vrf_id": 676767,
+    "parent_app_scope_id": "5aa6e28b497d4f3f820310ee",
+    "child_app_scope_ids": []
+  },
+  {
+    "filter_type": "AppScope",
+    "id": "5aa6e28c497d4f3f820310f6",
+    "name": "Tetration:FrontEnd:Mongo:MongoServer",
+    "description": null,
+    "short_name": "MongoServer",
+    "priority": "002:002:003:001:Z",
+    "short_priority": 1,
+    "policy_priority": 9,
+    "query": {
+      "type": "and",
+      "filters": [
+        {
+          "field": "vrf_id",
+          "type": "eq",
+          "value": 676767
+        },
+        {
+          "type": "or",
+          "filters": [
+            {
+              "field": "host_name",
+              "type": "contains",
+              "value": "appServer"
+            },
+            {
+              "field": "host_name",
+              "type": "contains",
+              "value": "elastic"
+            },
+            {
+              "field": "host_name",
+              "type": "contains",
+              "value": "redis"
+            },
+            {
+              "field": "host_name",
+              "type": "contains",
+              "value": "mongo"
+            }
+          ]
+        },
+        {
+          "field": "host_name",
+          "type": "contains",
+          "value": "mongo"
+        },
+        {
+          "field": "host_name",
+          "type": "contains",
+          "value": "mongodb-"
+        }
+      ]
+    },
+    "short_query": {
+      "type": "contains",
+      "field": "host_name",
+      "value": "mongodb-"
+    },
+    "dirty": false,
+    "dirty_short_query": null,
+    "vrf_id": 676767,
+    "parent_app_scope_id": "5aa6e28c497d4f3f820310f4",
+    "child_app_scope_ids": []
+  },
+  {
+    "filter_type": "AppScope",
+    "id": "5aa6e28c497d4f3f820310f8",
+    "name": "Tetration:FrontEnd:Mongo:MongoDBArbiter",
+    "description": null,
+    "short_name": "MongoDBArbiter",
+    "priority": "002:002:003:002:Z",
+    "short_priority": 2,
+    "policy_priority": 10,
+    "query": {
+      "type": "and",
+      "filters": [
+        {
+          "field": "vrf_id",
+          "type": "eq",
+          "value": 676767
+        },
+        {
+          "type": "or",
+          "filters": [
+            {
+              "field": "host_name",
+              "type": "contains",
+              "value": "appServer"
+            },
+            {
+              "field": "host_name",
+              "type": "contains",
+              "value": "elastic"
+            },
+            {
+              "field": "host_name",
+              "type": "contains",
+              "value": "redis"
+            },
+            {
+              "field": "host_name",
+              "type": "contains",
+              "value": "mongo"
+            }
+          ]
+        },
+        {
+          "field": "host_name",
+          "type": "contains",
+          "value": "mongo"
+        },
+        {
+          "field": "host_name",
+          "type": "contains",
+          "value": "mongodbAr"
+        }
+      ]
+    },
+    "short_query": {
+      "type": "contains",
+      "field": "host_name",
+      "value": "mongodbAr"
+    },
+    "dirty": false,
+    "dirty_short_query": null,
+    "vrf_id": 676767,
+    "parent_app_scope_id": "5aa6e28c497d4f3f820310f4",
+    "child_app_scope_ids": []
+  },
+  {
+    "filter_type": "AppScope",
+    "id": "5aa6e28c497d4f3f820310f4",
+    "name": "Tetration:FrontEnd:Mongo",
+    "description": null,
+    "short_name": "Mongo",
+    "priority": "002:002:003:Z",
+    "short_priority": 3,
+    "policy_priority": 8,
+    "query": {
+      "type": "and",
+      "filters": [
+        {
+          "field": "vrf_id",
+          "type": "eq",
+          "value": 676767
+        },
+        {
+          "type": "or",
+          "filters": [
+            {
+              "field": "host_name",
+              "type": "contains",
+              "value": "appServer"
+            },
+            {
+              "field": "host_name",
+              "type": "contains",
+              "value": "elastic"
+            },
+            {
+              "field": "host_name",
+              "type": "contains",
+              "value": "redis"
+            },
+            {
+              "field": "host_name",
+              "type": "contains",
+              "value": "mongo"
+            }
+          ]
+        },
+        {
+          "field": "host_name",
+          "type": "contains",
+          "value": "mongo"
+        }
+      ]
+    },
+    "short_query": {
+      "type": "contains",
+      "field": "host_name",
+      "value": "mongo"
+    },
+    "dirty": false,
+    "dirty_short_query": null,
+    "vrf_id": 676767,
+    "parent_app_scope_id": "5aa6e28b497d4f3f820310ee",
+    "child_app_scope_ids": [
+      "5aa6e28c497d4f3f820310f6",
+      "5aa6e28c497d4f3f820310f8"
+    ]
+  },
+  {
+    "filter_type": "AppScope",
+    "id": "5aa6e28b497d4f3f820310ee",
+    "name": "Tetration:FrontEnd",
+    "description": null,
+    "short_name": "FrontEnd",
+    "priority": "002:002:Z",
+    "short_priority": 2,
+    "policy_priority": 5,
+    "query": {
+      "type": "and",
+      "filters": [
+        {
+          "field": "vrf_id",
+          "type": "eq",
+          "value": 676767
+        },
+        {
+          "type": "or",
+          "filters": [
+            {
+              "field": "host_name",
+              "type": "contains",
+              "value": "appServer"
+            },
+            {
+              "field": "host_name",
+              "type": "contains",
+              "value": "elastic"
+            },
+            {
+              "field": "host_name",
+              "type": "contains",
+              "value": "redis"
+            },
+            {
+              "field": "host_name",
+              "type": "contains",
+              "value": "mongo"
+            }
+          ]
+        }
+      ]
+    },
+    "short_query": {
+      "type": "or",
+      "filters": [
+        {
+          "type": "contains",
+          "field": "host_name",
+          "value": "appServer"
+        },
+        {
+          "type": "contains",
+          "field": "host_name",
+          "value": "elastic"
+        },
+        {
+          "type": "contains",
+          "field": "host_name",
+          "value": "redis"
+        },
+        {
+          "type": "contains",
+          "field": "host_name",
+          "value": "mongo"
+        }
+      ]
+    },
+    "dirty": false,
+    "dirty_short_query": null,
+    "vrf_id": 676767,
+    "parent_app_scope_id": "5aa6e27e497d4f3d90c6c398",
+    "child_app_scope_ids": [
+      "5aa6e28c497d4f3f820310f0",
+      "5aa6e28c497d4f3f820310f2",
+      "5aa6e28c497d4f3f820310f4"
+    ]
+  },
+  {
+    "filter_type": "AppScope",
+    "id": "5aa6e28c497d4f3f820310fe",
+    "name": "Tetration:Compute:HDFS:Datanodes",
+    "description": null,
+    "short_name": "Datanodes",
+    "priority": "002:003:001:001:Z",
+    "short_priority": 1,
+    "policy_priority": 13,
+    "query": {
+      "type": "and",
+      "filters": [
+        {
+          "field": "vrf_id",
+          "type": "eq",
+          "value": 676767
+        },
+        {
+          "type": "or",
+          "filters": [
+            {
+              "field": "host_name",
+              "type": "contains",
+              "value": "datanode"
+            },
+            {
+              "field": "host_name",
+              "type": "contains",
+              "value": "nodemana"
+            },
+            {
+              "field": "host_name",
+              "type": "contains",
+              "value": "namenode"
+            },
+            {
+              "field": "host_name",
+              "type": "contains",
+              "value": "secondaryNamenode"
+            },
+            {
+              "field": "host_name",
+              "type": "contains",
+              "value": "resourceManager"
+            }
+          ]
+        },
+        {
+          "type": "or",
+          "filters": [
+            {
+              "field": "host_name",
+              "type": "contains",
+              "value": "datanode"
+            },
+            {
+              "field": "host_name",
+              "type": "contains",
+              "value": "namenode"
+            },
+            {
+              "field": "host_name",
+              "type": "contains",
+              "value": "secondaryNamenode"
+            }
+          ]
+        },
+        {
+          "field": "host_name",
+          "type": "contains",
+          "value": "datanode"
+        }
+      ]
+    },
+    "short_query": {
+      "type": "contains",
+      "field": "host_name",
+      "value": "datanode"
+    },
+    "dirty": false,
+    "dirty_short_query": null,
+    "vrf_id": 676767,
+    "parent_app_scope_id": "5aa6e28c497d4f3f820310fc",
+    "child_app_scope_ids": []
+  },
+  {
+    "filter_type": "AppScope",
+    "id": "5aa6e28c497d4f3f82031102",
+    "name": "Tetration:Compute:HDFS:Namenodes:PrimaryNamenode",
+    "description": null,
+    "short_name": "PrimaryNamenode",
+    "priority": "002:003:001:002:001:Z",
+    "short_priority": 1,
+    "policy_priority": 15,
+    "query": {
+      "type": "and",
+      "filters": [
+        {
+          "field": "vrf_id",
+          "type": "eq",
+          "value": 676767
+        },
+        {
+          "type": "or",
+          "filters": [
+            {
+              "field": "host_name",
+              "type": "contains",
+              "value": "datanode"
+            },
+            {
+              "field": "host_name",
+              "type": "contains",
+              "value": "nodemana"
+            },
+            {
+              "field": "host_name",
+              "type": "contains",
+              "value": "namenode"
+            },
+            {
+              "field": "host_name",
+              "type": "contains",
+              "value": "secondaryNamenode"
+            },
+            {
+              "field": "host_name",
+              "type": "contains",
+              "value": "resourceManager"
+            }
+          ]
+        },
+        {
+          "type": "or",
+          "filters": [
+            {
+              "field": "host_name",
+              "type": "contains",
+              "value": "datanode"
+            },
+            {
+              "field": "host_name",
+              "type": "contains",
+              "value": "namenode"
+            },
+            {
+              "field": "host_name",
+              "type": "contains",
+              "value": "secondaryNamenode"
+            }
+          ]
+        },
+        {
+          "type": "or",
+          "filters": [
+            {
+              "field": "host_name",
+              "type": "contains",
+              "value": "namenode"
+            },
+            {
+              "field": "host_name",
+              "type": "contains",
+              "value": "secondaryNamenode"
+            }
+          ]
+        },
+        {
+          "field": "host_name",
+          "type": "contains",
+          "value": "namenode"
+        }
+      ]
+    },
+    "short_query": {
+      "type": "contains",
+      "field": "host_name",
+      "value": "namenode"
+    },
+    "dirty": false,
+    "dirty_short_query": null,
+    "vrf_id": 676767,
+    "parent_app_scope_id": "5aa6e28c497d4f3f82031100",
+    "child_app_scope_ids": []
+  },
+  {
+    "filter_type": "AppScope",
+    "id": "5aa6e28c497d4f3f82031104",
+    "name": "Tetration:Compute:HDFS:Namenodes:SecondaryNamenode",
+    "description": null,
+    "short_name": "SecondaryNamenode",
+    "priority": "002:003:001:002:002:Z",
+    "short_priority": 2,
+    "policy_priority": 16,
+    "query": {
+      "type": "and",
+      "filters": [
+        {
+          "field": "vrf_id",
+          "type": "eq",
+          "value": 676767
+        },
+        {
+          "type": "or",
+          "filters": [
+            {
+              "field": "host_name",
+              "type": "contains",
+              "value": "datanode"
+            },
+            {
+              "field": "host_name",
+              "type": "contains",
+              "value": "nodemana"
+            },
+            {
+              "field": "host_name",
+              "type": "contains",
+              "value": "namenode"
+            },
+            {
+              "field": "host_name",
+              "type": "contains",
+              "value": "secondaryNamenode"
+            },
+            {
+              "field": "host_name",
+              "type": "contains",
+              "value": "resourceManager"
+            }
+          ]
+        },
+        {
+          "type": "or",
+          "filters": [
+            {
+              "field": "host_name",
+              "type": "contains",
+              "value": "datanode"
+            },
+            {
+              "field": "host_name",
+              "type": "contains",
+              "value": "namenode"
+            },
+            {
+              "field": "host_name",
+              "type": "contains",
+              "value": "secondaryNamenode"
+            }
+          ]
+        },
+        {
+          "type": "or",
+          "filters": [
+            {
+              "field": "host_name",
+              "type": "contains",
+              "value": "namenode"
+            },
+            {
+              "field": "host_name",
+              "type": "contains",
+              "value": "secondaryNamenode"
+            }
+          ]
+        },
+        {
+          "field": "host_name",
+          "type": "contains",
+          "value": "secondaryNamenode"
+        }
+      ]
+    },
+    "short_query": {
+      "type": "contains",
+      "field": "host_name",
+      "value": "secondaryNamenode"
+    },
+    "dirty": false,
+    "dirty_short_query": null,
+    "vrf_id": 676767,
+    "parent_app_scope_id": "5aa6e28c497d4f3f82031100",
+    "child_app_scope_ids": []
+  },
+  {
+    "filter_type": "AppScope",
+    "id": "5aa6e28c497d4f3f82031100",
+    "name": "Tetration:Compute:HDFS:Namenodes",
+    "description": null,
+    "short_name": "Namenodes",
+    "priority": "002:003:001:002:Z",
+    "short_priority": 2,
+    "policy_priority": 14,
+    "query": {
+      "type": "and",
+      "filters": [
+        {
+          "field": "vrf_id",
+          "type": "eq",
+          "value": 676767
+        },
+        {
+          "type": "or",
+          "filters": [
+            {
+              "field": "host_name",
+              "type": "contains",
+              "value": "datanode"
+            },
+            {
+              "field": "host_name",
+              "type": "contains",
+              "value": "nodemana"
+            },
+            {
+              "field": "host_name",
+              "type": "contains",
+              "value": "namenode"
+            },
+            {
+              "field": "host_name",
+              "type": "contains",
+              "value": "secondaryNamenode"
+            },
+            {
+              "field": "host_name",
+              "type": "contains",
+              "value": "resourceManager"
+            }
+          ]
+        },
+        {
+          "type": "or",
+          "filters": [
+            {
+              "field": "host_name",
+              "type": "contains",
+              "value": "datanode"
+            },
+            {
+              "field": "host_name",
+              "type": "contains",
+              "value": "namenode"
+            },
+            {
+              "field": "host_name",
+              "type": "contains",
+              "value": "secondaryNamenode"
+            }
+          ]
+        },
+        {
+          "type": "or",
+          "filters": [
+            {
+              "field": "host_name",
+              "type": "contains",
+              "value": "namenode"
+            },
+            {
+              "field": "host_name",
+              "type": "contains",
+              "value": "secondaryNamenode"
+            }
+          ]
+        }
+      ]
+    },
+    "short_query": {
+      "type": "or",
+      "filters": [
+        {
+          "type": "contains",
+          "field": "host_name",
+          "value": "namenode"
+        },
+        {
+          "type": "contains",
+          "field": "host_name",
+          "value": "secondaryNamenode"
+        }
+      ]
+    },
+    "dirty": false,
+    "dirty_short_query": null,
+    "vrf_id": 676767,
+    "parent_app_scope_id": "5aa6e28c497d4f3f820310fc",
+    "child_app_scope_ids": [
+      "5aa6e28c497d4f3f82031102",
+      "5aa6e28c497d4f3f82031104"
+    ]
+  },
+  {
+    "filter_type": "AppScope",
+    "id": "5aa6e28c497d4f3f820310fc",
+    "name": "Tetration:Compute:HDFS",
+    "description": null,
+    "short_name": "HDFS",
+    "priority": "002:003:001:Z",
+    "short_priority": 1,
+    "policy_priority": 12,
+    "query": {
+      "type": "and",
+      "filters": [
+        {
+          "field": "vrf_id",
+          "type": "eq",
+          "value": 676767
+        },
+        {
+          "type": "or",
+          "filters": [
+            {
+              "field": "host_name",
+              "type": "contains",
+              "value": "datanode"
+            },
+            {
+              "field": "host_name",
+              "type": "contains",
+              "value": "nodemana"
+            },
+            {
+              "field": "host_name",
+              "type": "contains",
+              "value": "namenode"
+            },
+            {
+              "field": "host_name",
+              "type": "contains",
+              "value": "secondaryNamenode"
+            },
+            {
+              "field": "host_name",
+              "type": "contains",
+              "value": "resourceManager"
+            }
+          ]
+        },
+        {
+          "type": "or",
+          "filters": [
+            {
+              "field": "host_name",
+              "type": "contains",
+              "value": "datanode"
+            },
+            {
+              "field": "host_name",
+              "type": "contains",
+              "value": "namenode"
+            },
+            {
+              "field": "host_name",
+              "type": "contains",
+              "value": "secondaryNamenode"
+            }
+          ]
+        }
+      ]
+    },
+    "short_query": {
+      "type": "or",
+      "filters": [
+        {
+          "type": "contains",
+          "field": "host_name",
+          "value": "datanode"
+        },
+        {
+          "type": "contains",
+          "field": "host_name",
+          "value": "namenode"
+        },
+        {
+          "type": "contains",
+          "field": "host_name",
+          "value": "secondaryNamenode"
+        }
+      ]
+    },
+    "dirty": false,
+    "dirty_short_query": null,
+    "vrf_id": 676767,
+    "parent_app_scope_id": "5aa6e28c497d4f3f820310fa",
+    "child_app_scope_ids": [
+      "5aa6e28c497d4f3f820310fe",
+      "5aa6e28c497d4f3f82031100"
+    ]
+  },
+  {
+    "filter_type": "AppScope",
+    "id": "5aa6e28c497d4f3f82031108",
+    "name": "Tetration:Compute:YARN:Nodemanagers",
+    "description": null,
+    "short_name": "Nodemanagers",
+    "priority": "002:003:002:001:Z",
+    "short_priority": 1,
+    "policy_priority": 18,
+    "query": {
+      "type": "and",
+      "filters": [
+        {
+          "field": "vrf_id",
+          "type": "eq",
+          "value": 676767
+        },
+        {
+          "type": "or",
+          "filters": [
+            {
+              "field": "host_name",
+              "type": "contains",
+              "value": "datanode"
+            },
+            {
+              "field": "host_name",
+              "type": "contains",
+              "value": "nodemana"
+            },
+            {
+              "field": "host_name",
+              "type": "contains",
+              "value": "namenode"
+            },
+            {
+              "field": "host_name",
+              "type": "contains",
+              "value": "secondaryNamenode"
+            },
+            {
+              "field": "host_name",
+              "type": "contains",
+              "value": "resourceManager"
+            }
+          ]
+        },
+        {
+          "type": "or",
+          "filters": [
+            {
+              "field": "host_name",
+              "type": "contains",
+              "value": "nodemanager"
+            },
+            {
+              "field": "host_name",
+              "type": "contains",
+              "value": "resourceManager"
+            }
+          ]
+        },
+        {
+          "field": "host_name",
+          "type": "contains",
+          "value": "nodemanagers"
+        }
+      ]
+    },
+    "short_query": {
+      "type": "contains",
+      "field": "host_name",
+      "value": "nodemanagers"
+    },
+    "dirty": false,
+    "dirty_short_query": null,
+    "vrf_id": 676767,
+    "parent_app_scope_id": "5aa6e28c497d4f3f82031106",
+    "child_app_scope_ids": []
+  },
+  {
+    "filter_type": "AppScope",
+    "id": "5aa6e28c497d4f3f8203110a",
+    "name": "Tetration:Compute:YARN:ResourceManagers",
+    "description": null,
+    "short_name": "ResourceManagers",
+    "priority": "002:003:002:002:Z",
+    "short_priority": 2,
+    "policy_priority": 19,
+    "query": {
+      "type": "and",
+      "filters": [
+        {
+          "field": "vrf_id",
+          "type": "eq",
+          "value": 676767
+        },
+        {
+          "type": "or",
+          "filters": [
+            {
+              "field": "host_name",
+              "type": "contains",
+              "value": "datanode"
+            },
+            {
+              "field": "host_name",
+              "type": "contains",
+              "value": "nodemana"
+            },
+            {
+              "field": "host_name",
+              "type": "contains",
+              "value": "namenode"
+            },
+            {
+              "field": "host_name",
+              "type": "contains",
+              "value": "secondaryNamenode"
+            },
+            {
+              "field": "host_name",
+              "type": "contains",
+              "value": "resourceManager"
+            }
+          ]
+        },
+        {
+          "type": "or",
+          "filters": [
+            {
+              "field": "host_name",
+              "type": "contains",
+              "value": "nodemanager"
+            },
+            {
+              "field": "host_name",
+              "type": "contains",
+              "value": "resourceManager"
+            }
+          ]
+        },
+        {
+          "field": "host_name",
+          "type": "contains",
+          "value": "resourceManager"
+        }
+      ]
+    },
+    "short_query": {
+      "type": "contains",
+      "field": "host_name",
+      "value": "resourceManager"
+    },
+    "dirty": false,
+    "dirty_short_query": null,
+    "vrf_id": 676767,
+    "parent_app_scope_id": "5aa6e28c497d4f3f82031106",
+    "child_app_scope_ids": []
+  },
+  {
+    "filter_type": "AppScope",
+    "id": "5aa6e28c497d4f3f82031106",
+    "name": "Tetration:Compute:YARN",
+    "description": null,
+    "short_name": "YARN",
+    "priority": "002:003:002:Z",
+    "short_priority": 2,
+    "policy_priority": 17,
+    "query": {
+      "type": "and",
+      "filters": [
+        {
+          "field": "vrf_id",
+          "type": "eq",
+          "value": 676767
+        },
+        {
+          "type": "or",
+          "filters": [
+            {
+              "field": "host_name",
+              "type": "contains",
+              "value": "datanode"
+            },
+            {
+              "field": "host_name",
+              "type": "contains",
+              "value": "nodemana"
+            },
+            {
+              "field": "host_name",
+              "type": "contains",
+              "value": "namenode"
+            },
+            {
+              "field": "host_name",
+              "type": "contains",
+              "value": "secondaryNamenode"
+            },
+            {
+              "field": "host_name",
+              "type": "contains",
+              "value": "resourceManager"
+            }
+          ]
+        },
+        {
+          "type": "or",
+          "filters": [
+            {
+              "field": "host_name",
+              "type": "contains",
+              "value": "nodemanager"
+            },
+            {
+              "field": "host_name",
+              "type": "contains",
+              "value": "resourceManager"
+            }
+          ]
+        }
+      ]
+    },
+    "short_query": {
+      "type": "or",
+      "filters": [
+        {
+          "type": "contains",
+          "field": "host_name",
+          "value": "nodemanager"
+        },
+        {
+          "type": "contains",
+          "field": "host_name",
+          "value": "resourceManager"
+        }
+      ]
+    },
+    "dirty": false,
+    "dirty_short_query": null,
+    "vrf_id": 676767,
+    "parent_app_scope_id": "5aa6e28c497d4f3f820310fa",
+    "child_app_scope_ids": [
+      "5aa6e28c497d4f3f82031108",
+      "5aa6e28c497d4f3f8203110a"
+    ]
+  },
+  {
+    "filter_type": "AppScope",
+    "id": "5aa6e28c497d4f3f820310fa",
+    "name": "Tetration:Compute",
+    "description": null,
+    "short_name": "Compute",
+    "priority": "002:003:Z",
+    "short_priority": 3,
+    "policy_priority": 11,
+    "query": {
+      "type": "and",
+      "filters": [
+        {
+          "field": "vrf_id",
+          "type": "eq",
+          "value": 676767
+        },
+        {
+          "type": "or",
+          "filters": [
+            {
+              "field": "host_name",
+              "type": "contains",
+              "value": "datanode"
+            },
+            {
+              "field": "host_name",
+              "type": "contains",
+              "value": "nodemana"
+            },
+            {
+              "field": "host_name",
+              "type": "contains",
+              "value": "namenode"
+            },
+            {
+              "field": "host_name",
+              "type": "contains",
+              "value": "secondaryNamenode"
+            },
+            {
+              "field": "host_name",
+              "type": "contains",
+              "value": "resourceManager"
+            }
+          ]
+        }
+      ]
+    },
+    "short_query": {
+      "type": "or",
+      "filters": [
+        {
+          "type": "contains",
+          "field": "host_name",
+          "value": "datanode"
+        },
+        {
+          "type": "contains",
+          "field": "host_name",
+          "value": "nodemana"
+        },
+        {
+          "type": "contains",
+          "field": "host_name",
+          "value": "namenode"
+        },
+        {
+          "type": "contains",
+          "field": "host_name",
+          "value": "secondaryNamenode"
+        },
+        {
+          "type": "contains",
+          "field": "host_name",
+          "value": "resourceManager"
+        }
+      ]
+    },
+    "dirty": false,
+    "dirty_short_query": null,
+    "vrf_id": 676767,
+    "parent_app_scope_id": "5aa6e27e497d4f3d90c6c398",
+    "child_app_scope_ids": [
+      "5aa6e28c497d4f3f820310fc",
+      "5aa6e28c497d4f3f82031106"
+    ]
+  },
+  {
+    "filter_type": "AppScope",
+    "id": "5aa6e28c497d4f3f8203110e",
+    "name": "Tetration:Serving Layer:Coordinators",
+    "description": null,
+    "short_name": "Coordinators",
+    "priority": "002:004:001:Z",
+    "short_priority": 1,
+    "policy_priority": 21,
+    "query": {
+      "type": "and",
+      "filters": [
+        {
+          "field": "vrf_id",
+          "type": "eq",
+          "value": 676767
+        },
+        {
+          "field": "host_name",
+          "type": "contains",
+          "value": "druid"
+        },
+        {
+          "field": "host_name",
+          "type": "contains",
+          "value": "druidCo"
+        }
+      ]
+    },
+    "short_query": {
+      "type": "contains",
+      "field": "host_name",
+      "value": "druidCo"
+    },
+    "dirty": false,
+    "dirty_short_query": null,
+    "vrf_id": 676767,
+    "parent_app_scope_id": "5aa6e28c497d4f3f8203110c",
+    "child_app_scope_ids": []
+  },
+  {
+    "filter_type": "AppScope",
+    "id": "5aa6e28c497d4f3f82031110",
+    "name": "Tetration:Serving Layer:HistoricalsAndBrokers",
+    "description": null,
+    "short_name": "HistoricalsAndBrokers",
+    "priority": "002:004:002:Z",
+    "short_priority": 2,
+    "policy_priority": 22,
+    "query": {
+      "type": "and",
+      "filters": [
+        {
+          "field": "vrf_id",
+          "type": "eq",
+          "value": 676767
+        },
+        {
+          "field": "host_name",
+          "type": "contains",
+          "value": "druid"
+        },
+        {
+          "field": "host_name",
+          "type": "contains",
+          "value": "druidHis"
+        }
+      ]
+    },
+    "short_query": {
+      "type": "contains",
+      "field": "host_name",
+      "value": "druidHis"
+    },
+    "dirty": false,
+    "dirty_short_query": null,
+    "vrf_id": 676767,
+    "parent_app_scope_id": "5aa6e28c497d4f3f8203110c",
+    "child_app_scope_ids": []
+  },
+  {
+    "filter_type": "AppScope",
+    "id": "5aa6e28c497d4f3f8203110c",
+    "name": "Tetration:Serving Layer",
+    "description": null,
+    "short_name": "Serving Layer",
+    "priority": "002:004:Z",
+    "short_priority": 4,
+    "policy_priority": 20,
+    "query": {
+      "type": "and",
+      "filters": [
+        {
+          "field": "vrf_id",
+          "type": "eq",
+          "value": 676767
+        },
+        {
+          "field": "host_name",
+          "type": "contains",
+          "value": "druid"
+        }
+      ]
+    },
+    "short_query": {
+      "type": "contains",
+      "field": "host_name",
+      "value": "druid"
+    },
+    "dirty": false,
+    "dirty_short_query": null,
+    "vrf_id": 676767,
+    "parent_app_scope_id": "5aa6e27e497d4f3d90c6c398",
+    "child_app_scope_ids": [
+      "5aa6e28c497d4f3f8203110e",
+      "5aa6e28c497d4f3f82031110"
+    ]
+  },
+  {
+    "filter_type": "AppScope",
+    "id": "5aa6e28c497d4f3f82031116",
+    "name": "Tetration:Infrastructure:Monitoring:TSDB",
+    "description": null,
+    "short_name": "TSDB",
+    "priority": "002:005:001:001:Z",
+    "short_priority": 1,
+    "policy_priority": 25,
+    "query": {
+      "type": "and",
+      "filters": [
+        {
+          "field": "vrf_id",
+          "type": "eq",
+          "value": 676767
+        },
+        {
+          "type": "or",
+          "filters": [
+            {
+              "field": "host_name",
+              "type": "contains",
+              "value": "zoo"
+            },
+            {
+              "field": "host_name",
+              "type": "contains",
+              "value": "orch"
+            },
+            {
+              "field": "host_name",
+              "type": "contains",
+              "value": "launch"
+            },
+            {
+              "field": "host_name",
+              "type": "contains",
+              "value": "happo"
+            },
+            {
+              "field": "host_name",
+              "type": "contains",
+              "value": "tsdb"
+            },
+            {
+              "field": "host_name",
+              "type": "contains",
+              "value": "hbase"
+            }
+          ]
+        },
+        {
+          "type": "or",
+          "filters": [
+            {
+              "field": "host_name",
+              "type": "contains",
+              "value": "tsdb"
+            },
+            {
+              "field": "host_name",
+              "type": "contains",
+              "value": "hbase"
+            }
+          ]
+        },
+        {
+          "field": "host_name",
+          "type": "contains",
+          "value": "tsdb"
+        }
+      ]
+    },
+    "short_query": {
+      "type": "contains",
+      "field": "host_name",
+      "value": "tsdb"
+    },
+    "dirty": false,
+    "dirty_short_query": null,
+    "vrf_id": 676767,
+    "parent_app_scope_id": "5aa6e28c497d4f3f82031114",
+    "child_app_scope_ids": []
+  },
+  {
+    "filter_type": "AppScope",
+    "id": "5aa6e28c497d4f3f82031118",
+    "name": "Tetration:Infrastructure:Monitoring:HBase",
+    "description": null,
+    "short_name": "HBase",
+    "priority": "002:005:001:002:Z",
+    "short_priority": 2,
+    "policy_priority": 26,
+    "query": {
+      "type": "and",
+      "filters": [
+        {
+          "field": "vrf_id",
+          "type": "eq",
+          "value": 676767
+        },
+        {
+          "type": "or",
+          "filters": [
+            {
+              "field": "host_name",
+              "type": "contains",
+              "value": "zoo"
+            },
+            {
+              "field": "host_name",
+              "type": "contains",
+              "value": "orch"
+            },
+            {
+              "field": "host_name",
+              "type": "contains",
+              "value": "launch"
+            },
+            {
+              "field": "host_name",
+              "type": "contains",
+              "value": "happo"
+            },
+            {
+              "field": "host_name",
+              "type": "contains",
+              "value": "tsdb"
+            },
+            {
+              "field": "host_name",
+              "type": "contains",
+              "value": "hbase"
+            }
+          ]
+        },
+        {
+          "type": "or",
+          "filters": [
+            {
+              "field": "host_name",
+              "type": "contains",
+              "value": "tsdb"
+            },
+            {
+              "field": "host_name",
+              "type": "contains",
+              "value": "hbase"
+            }
+          ]
+        },
+        {
+          "field": "host_name",
+          "type": "contains",
+          "value": "hbase"
+        }
+      ]
+    },
+    "short_query": {
+      "type": "contains",
+      "field": "host_name",
+      "value": "hbase"
+    },
+    "dirty": false,
+    "dirty_short_query": null,
+    "vrf_id": 676767,
+    "parent_app_scope_id": "5aa6e28c497d4f3f82031114",
+    "child_app_scope_ids": []
+  },
+  {
+    "filter_type": "AppScope",
+    "id": "5aa6e28c497d4f3f82031114",
+    "name": "Tetration:Infrastructure:Monitoring",
+    "description": null,
+    "short_name": "Monitoring",
+    "priority": "002:005:001:Z",
+    "short_priority": 1,
+    "policy_priority": 24,
+    "query": {
+      "type": "and",
+      "filters": [
+        {
+          "field": "vrf_id",
+          "type": "eq",
+          "value": 676767
+        },
+        {
+          "type": "or",
+          "filters": [
+            {
+              "field": "host_name",
+              "type": "contains",
+              "value": "zoo"
+            },
+            {
+              "field": "host_name",
+              "type": "contains",
+              "value": "orch"
+            },
+            {
+              "field": "host_name",
+              "type": "contains",
+              "value": "launch"
+            },
+            {
+              "field": "host_name",
+              "type": "contains",
+              "value": "happo"
+            },
+            {
+              "field": "host_name",
+              "type": "contains",
+              "value": "tsdb"
+            },
+            {
+              "field": "host_name",
+              "type": "contains",
+              "value": "hbase"
+            }
+          ]
+        },
+        {
+          "type": "or",
+          "filters": [
+            {
+              "field": "host_name",
+              "type": "contains",
+              "value": "tsdb"
+            },
+            {
+              "field": "host_name",
+              "type": "contains",
+              "value": "hbase"
+            }
+          ]
+        }
+      ]
+    },
+    "short_query": {
+      "type": "or",
+      "filters": [
+        {
+          "type": "contains",
+          "field": "host_name",
+          "value": "tsdb"
+        },
+        {
+          "type": "contains",
+          "field": "host_name",
+          "value": "hbase"
+        }
+      ]
+    },
+    "dirty": false,
+    "dirty_short_query": null,
+    "vrf_id": 676767,
+    "parent_app_scope_id": "5aa6e28c497d4f3f82031112",
+    "child_app_scope_ids": [
+      "5aa6e28c497d4f3f82031116",
+      "5aa6e28c497d4f3f82031118"
+    ]
+  },
+  {
+    "filter_type": "AppScope",
+    "id": "5aa6e28c497d4f3f8203111a",
+    "name": "Tetration:Infrastructure:Launchers",
+    "description": null,
+    "short_name": "Launchers",
+    "priority": "002:005:002:Z",
+    "short_priority": 2,
+    "policy_priority": 27,
+    "query": {
+      "type": "and",
+      "filters": [
+        {
+          "field": "vrf_id",
+          "type": "eq",
+          "value": 676767
+        },
+        {
+          "type": "or",
+          "filters": [
+            {
+              "field": "host_name",
+              "type": "contains",
+              "value": "zoo"
+            },
+            {
+              "field": "host_name",
+              "type": "contains",
+              "value": "orch"
+            },
+            {
+              "field": "host_name",
+              "type": "contains",
+              "value": "launch"
+            },
+            {
+              "field": "host_name",
+              "type": "contains",
+              "value": "happo"
+            },
+            {
+              "field": "host_name",
+              "type": "contains",
+              "value": "tsdb"
+            },
+            {
+              "field": "host_name",
+              "type": "contains",
+              "value": "hbase"
+            }
+          ]
+        },
+        {
+          "field": "host_name",
+          "type": "contains",
+          "value": "launcher"
+        }
+      ]
+    },
+    "short_query": {
+      "type": "contains",
+      "field": "host_name",
+      "value": "launcher"
+    },
+    "dirty": false,
+    "dirty_short_query": null,
+    "vrf_id": 676767,
+    "parent_app_scope_id": "5aa6e28c497d4f3f82031112",
+    "child_app_scope_ids": []
+  },
+  {
+    "filter_type": "AppScope",
+    "id": "5aa6e28c497d4f3f8203111e",
+    "name": "Tetration:Infrastructure:DistributedCoordinators:ZooKeeper",
+    "description": null,
+    "short_name": "ZooKeeper",
+    "priority": "002:005:003:001:Z",
+    "short_priority": 1,
+    "policy_priority": 29,
+    "query": {
+      "type": "and",
+      "filters": [
+        {
+          "field": "vrf_id",
+          "type": "eq",
+          "value": 676767
+        },
+        {
+          "type": "or",
+          "filters": [
+            {
+              "field": "host_name",
+              "type": "contains",
+              "value": "zoo"
+            },
+            {
+              "field": "host_name",
+              "type": "contains",
+              "value": "orch"
+            },
+            {
+              "field": "host_name",
+              "type": "contains",
+              "value": "launch"
+            },
+            {
+              "field": "host_name",
+              "type": "contains",
+              "value": "happo"
+            },
+            {
+              "field": "host_name",
+              "type": "contains",
+              "value": "tsdb"
+            },
+            {
+              "field": "host_name",
+              "type": "contains",
+              "value": "hbase"
+            }
+          ]
+        },
+        {
+          "type": "or",
+          "filters": [
+            {
+              "field": "host_name",
+              "type": "contains",
+              "value": "zoo"
+            },
+            {
+              "field": "host_name",
+              "type": "contains",
+              "value": "orch"
+            }
+          ]
+        },
+        {
+          "field": "host_name",
+          "type": "contains",
+          "value": "zoo"
+        }
+      ]
+    },
+    "short_query": {
+      "type": "contains",
+      "field": "host_name",
+      "value": "zoo"
+    },
+    "dirty": false,
+    "dirty_short_query": null,
+    "vrf_id": 676767,
+    "parent_app_scope_id": "5aa6e28c497d4f3f8203111c",
+    "child_app_scope_ids": []
+  },
+  {
+    "filter_type": "AppScope",
+    "id": "5aa6e28c497d4f3f82031120",
+    "name": "Tetration:Infrastructure:DistributedCoordinators:Orchestrator",
+    "description": null,
+    "short_name": "Orchestrator",
+    "priority": "002:005:003:002:Z",
+    "short_priority": 2,
+    "policy_priority": 30,
+    "query": {
+      "type": "and",
+      "filters": [
+        {
+          "field": "vrf_id",
+          "type": "eq",
+          "value": 676767
+        },
+        {
+          "type": "or",
+          "filters": [
+            {
+              "field": "host_name",
+              "type": "contains",
+              "value": "zoo"
+            },
+            {
+              "field": "host_name",
+              "type": "contains",
+              "value": "orch"
+            },
+            {
+              "field": "host_name",
+              "type": "contains",
+              "value": "launch"
+            },
+            {
+              "field": "host_name",
+              "type": "contains",
+              "value": "happo"
+            },
+            {
+              "field": "host_name",
+              "type": "contains",
+              "value": "tsdb"
+            },
+            {
+              "field": "host_name",
+              "type": "contains",
+              "value": "hbase"
+            }
+          ]
+        },
+        {
+          "type": "or",
+          "filters": [
+            {
+              "field": "host_name",
+              "type": "contains",
+              "value": "zoo"
+            },
+            {
+              "field": "host_name",
+              "type": "contains",
+              "value": "orch"
+            }
+          ]
+        },
+        {
+          "field": "host_name",
+          "type": "contains",
+          "value": "orch"
+        }
+      ]
+    },
+    "short_query": {
+      "type": "contains",
+      "field": "host_name",
+      "value": "orch"
+    },
+    "dirty": false,
+    "dirty_short_query": null,
+    "vrf_id": 676767,
+    "parent_app_scope_id": "5aa6e28c497d4f3f8203111c",
+    "child_app_scope_ids": []
+  },
+  {
+    "filter_type": "AppScope",
+    "id": "5aa6e28c497d4f3f8203111c",
+    "name": "Tetration:Infrastructure:DistributedCoordinators",
+    "description": null,
+    "short_name": "DistributedCoordinators",
+    "priority": "002:005:003:Z",
+    "short_priority": 3,
+    "policy_priority": 28,
+    "query": {
+      "type": "and",
+      "filters": [
+        {
+          "field": "vrf_id",
+          "type": "eq",
+          "value": 676767
+        },
+        {
+          "type": "or",
+          "filters": [
+            {
+              "field": "host_name",
+              "type": "contains",
+              "value": "zoo"
+            },
+            {
+              "field": "host_name",
+              "type": "contains",
+              "value": "orch"
+            },
+            {
+              "field": "host_name",
+              "type": "contains",
+              "value": "launch"
+            },
+            {
+              "field": "host_name",
+              "type": "contains",
+              "value": "happo"
+            },
+            {
+              "field": "host_name",
+              "type": "contains",
+              "value": "tsdb"
+            },
+            {
+              "field": "host_name",
+              "type": "contains",
+              "value": "hbase"
+            }
+          ]
+        },
+        {
+          "type": "or",
+          "filters": [
+            {
+              "field": "host_name",
+              "type": "contains",
+              "value": "zoo"
+            },
+            {
+              "field": "host_name",
+              "type": "contains",
+              "value": "orch"
+            }
+          ]
+        }
+      ]
+    },
+    "short_query": {
+      "type": "or",
+      "filters": [
+        {
+          "type": "contains",
+          "field": "host_name",
+          "value": "zoo"
+        },
+        {
+          "type": "contains",
+          "field": "host_name",
+          "value": "orch"
+        }
+      ]
+    },
+    "dirty": false,
+    "dirty_short_query": null,
+    "vrf_id": 676767,
+    "parent_app_scope_id": "5aa6e28c497d4f3f82031112",
+    "child_app_scope_ids": [
+      "5aa6e28c497d4f3f8203111e",
+      "5aa6e28c497d4f3f82031120"
+    ]
+  },
+  {
+    "filter_type": "AppScope",
+    "id": "5aa6e28c497d4f3f82031122",
+    "name": "Tetration:Infrastructure:HAProxyPostGresAMSBatchMover",
+    "description": null,
+    "short_name": "HAProxyPostGresAMSBatchMover",
+    "priority": "002:005:004:Z",
+    "short_priority": 4,
+    "policy_priority": 31,
+    "query": {
+      "type": "and",
+      "filters": [
+        {
+          "field": "vrf_id",
+          "type": "eq",
+          "value": 676767
+        },
+        {
+          "type": "or",
+          "filters": [
+            {
+              "field": "host_name",
+              "type": "contains",
+              "value": "zoo"
+            },
+            {
+              "field": "host_name",
+              "type": "contains",
+              "value": "orch"
+            },
+            {
+              "field": "host_name",
+              "type": "contains",
+              "value": "launch"
+            },
+            {
+              "field": "host_name",
+              "type": "contains",
+              "value": "happo"
+            },
+            {
+              "field": "host_name",
+              "type": "contains",
+              "value": "tsdb"
+            },
+            {
+              "field": "host_name",
+              "type": "contains",
+              "value": "hbase"
+            }
+          ]
+        },
+        {
+          "field": "host_name",
+          "type": "contains",
+          "value": "happo"
+        }
+      ]
+    },
+    "short_query": {
+      "type": "contains",
+      "field": "host_name",
+      "value": "happo"
+    },
+    "dirty": false,
+    "dirty_short_query": null,
+    "vrf_id": 676767,
+    "parent_app_scope_id": "5aa6e28c497d4f3f82031112",
+    "child_app_scope_ids": []
+  },
+  {
+    "filter_type": "AppScope",
+    "id": "5aa6e28c497d4f3f82031112",
+    "name": "Tetration:Infrastructure",
+    "description": null,
+    "short_name": "Infrastructure",
+    "priority": "002:005:Z",
+    "short_priority": 5,
+    "policy_priority": 23,
+    "query": {
+      "type": "and",
+      "filters": [
+        {
+          "field": "vrf_id",
+          "type": "eq",
+          "value": 676767
+        },
+        {
+          "type": "or",
+          "filters": [
+            {
+              "field": "host_name",
+              "type": "contains",
+              "value": "zoo"
+            },
+            {
+              "field": "host_name",
+              "type": "contains",
+              "value": "orch"
+            },
+            {
+              "field": "host_name",
+              "type": "contains",
+              "value": "launch"
+            },
+            {
+              "field": "host_name",
+              "type": "contains",
+              "value": "happo"
+            },
+            {
+              "field": "host_name",
+              "type": "contains",
+              "value": "tsdb"
+            },
+            {
+              "field": "host_name",
+              "type": "contains",
+              "value": "hbase"
+            }
+          ]
+        }
+      ]
+    },
+    "short_query": {
+      "type": "or",
+      "filters": [
+        {
+          "type": "contains",
+          "field": "host_name",
+          "value": "zoo"
+        },
+        {
+          "type": "contains",
+          "field": "host_name",
+          "value": "orch"
+        },
+        {
+          "type": "contains",
+          "field": "host_name",
+          "value": "launch"
+        },
+        {
+          "type": "contains",
+          "field": "host_name",
+          "value": "happo"
+        },
+        {
+          "type": "contains",
+          "field": "host_name",
+          "value": "tsdb"
+        },
+        {
+          "type": "contains",
+          "field": "host_name",
+          "value": "hbase"
+        }
+      ]
+    },
+    "dirty": false,
+    "dirty_short_query": null,
+    "vrf_id": 676767,
+    "parent_app_scope_id": "5aa6e27e497d4f3d90c6c398",
+    "child_app_scope_ids": [
+      "5aa6e28c497d4f3f82031114",
+      "5aa6e28c497d4f3f8203111a",
+      "5aa6e28c497d4f3f8203111c",
+      "5aa6e28c497d4f3f82031122"
+    ]
+  },
+  {
+    "filter_type": "AppScope",
+    "id": "5aa6e28c497d4f3f82031126",
+    "name": "Tetration:Enforcement:EnforcementCoordinator",
+    "description": null,
+    "short_name": "EnforcementCoordinator",
+    "priority": "002:006:001:Z",
+    "short_priority": 1,
+    "policy_priority": 33,
+    "query": {
+      "type": "and",
+      "filters": [
+        {
+          "field": "vrf_id",
+          "type": "eq",
+          "value": 676767
+        },
+        {
+          "field": "host_name",
+          "type": "contains",
+          "value": "enforcement"
+        },
+        {
+          "field": "host_name",
+          "type": "contains",
+          "value": "enforcementCo"
+        }
+      ]
+    },
+    "short_query": {
+      "type": "contains",
+      "field": "host_name",
+      "value": "enforcementCo"
+    },
+    "dirty": false,
+    "dirty_short_query": null,
+    "vrf_id": 676767,
+    "parent_app_scope_id": "5aa6e28c497d4f3f82031124",
+    "child_app_scope_ids": []
+  },
+  {
+    "filter_type": "AppScope",
+    "id": "5aa6e28c497d4f3f82031128",
+    "name": "Tetration:Enforcement:EnforcementPolicyStore",
+    "description": null,
+    "short_name": "EnforcementPolicyStore",
+    "priority": "002:006:002:Z",
+    "short_priority": 2,
+    "policy_priority": 34,
+    "query": {
+      "type": "and",
+      "filters": [
+        {
+          "field": "vrf_id",
+          "type": "eq",
+          "value": 676767
+        },
+        {
+          "field": "host_name",
+          "type": "contains",
+          "value": "enforcement"
+        },
+        {
+          "field": "host_name",
+          "type": "contains",
+          "value": "enforcementPolicy"
+        }
+      ]
+    },
+    "short_query": {
+      "type": "contains",
+      "field": "host_name",
+      "value": "enforcementPolicy"
+    },
+    "dirty": false,
+    "dirty_short_query": null,
+    "vrf_id": 676767,
+    "parent_app_scope_id": "5aa6e28c497d4f3f82031124",
+    "child_app_scope_ids": []
+  },
+  {
+    "filter_type": "AppScope",
+    "id": "5aa6e28c497d4f3f82031124",
+    "name": "Tetration:Enforcement",
+    "description": null,
+    "short_name": "Enforcement",
+    "priority": "002:006:Z",
+    "short_priority": 6,
+    "policy_priority": 32,
+    "query": {
+      "type": "and",
+      "filters": [
+        {
+          "field": "vrf_id",
+          "type": "eq",
+          "value": 676767
+        },
+        {
+          "field": "host_name",
+          "type": "contains",
+          "value": "enforcement"
+        }
+      ]
+    },
+    "short_query": {
+      "type": "contains",
+      "field": "host_name",
+      "value": "enforcement"
+    },
+    "dirty": false,
+    "dirty_short_query": null,
+    "vrf_id": 676767,
+    "parent_app_scope_id": "5aa6e27e497d4f3d90c6c398",
+    "child_app_scope_ids": [
+      "5aa6e28c497d4f3f82031126",
+      "5aa6e28c497d4f3f82031128"
+    ]
+  },
+  {
+    "filter_type": "AppScope",
+    "id": "5aa6e28c497d4f3f8203112a",
+    "name": "Tetration:Collector",
+    "description": null,
+    "short_name": "Collector",
+    "priority": "002:007:Z",
+    "short_priority": 7,
+    "policy_priority": 35,
+    "query": {
+      "type": "and",
+      "filters": [
+        {
+          "field": "vrf_id",
+          "type": "eq",
+          "value": 676767
+        },
+        {
+          "field": "host_name",
+          "type": "contains",
+          "value": "collector"
+        }
+      ]
+    },
+    "short_query": {
+      "type": "contains",
+      "field": "host_name",
+      "value": "collector"
+    },
+    "dirty": false,
+    "dirty_short_query": null,
+    "vrf_id": 676767,
+    "parent_app_scope_id": "5aa6e27e497d4f3d90c6c398",
+    "child_app_scope_ids": []
+  },
+  {
+    "filter_type": "AppScope",
+    "id": "5aa6e27e497d4f3d90c6c398",
+    "name": "Tetration",
+    "description": null,
+    "short_name": "Tetration",
+    "priority": "002:Z",
+    "short_priority": 2,
+    "policy_priority": 1,
+    "query": {
+      "type": "eq",
+      "field": "vrf_id",
+      "value": 676767
+    },
+    "short_query": {
+      "type": "eq",
+      "field": "vrf_id",
+      "value": 676767
+    },
+    "dirty": false,
+    "dirty_short_query": null,
+    "vrf_id": 676767,
+    "parent_app_scope_id": "",
+    "child_app_scope_ids": [
+      "5aa6e28b497d4f3f820310e8",
+      "5aa6e28b497d4f3f820310ee",
+      "5aa6e28c497d4f3f820310fa",
+      "5aa6e28c497d4f3f8203110c",
+      "5aa6e28c497d4f3f82031112",
+      "5aa6e28c497d4f3f82031124",
+      "5aa6e28c497d4f3f8203112a"
+    ]
+  }
+]
