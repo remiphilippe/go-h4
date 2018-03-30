@@ -1,0 +1,33 @@
+{
+  "type": "and",
+  "filters": [{
+      "field": "vrf_id",
+      "type": "eq",
+      "value": 1
+    },
+    {
+      "type": 1,
+      "filters": [{
+          "field": "ip",
+          "type": "subnet",
+          "value": "172.20.0.0/16"
+        },
+        {
+          "field": "ip",
+          "type": "subnet",
+          "value": "172.21.0.0/16"
+        }
+      ]
+    },
+    {
+      "field": "ip",
+      "type": "subnet",
+      "value": "172.21.0.0/16"
+    },
+    {
+      "field": "user_scope",
+      "type": "eq",
+      "value": "pod03"
+    }
+  ]
+}

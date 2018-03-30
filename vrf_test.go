@@ -50,6 +50,11 @@ func TestAddVRF(t *testing.T) {
 	err := h.AddVRF(&v)
 	if err != nil {
 		t.Errorf("Error in AddVRF: %s", err.Error())
+		return
+	}
+
+	if v.Scope == nil {
+		t.Errorf("Error, we should have a scope\n")
 	}
 }
 

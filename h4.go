@@ -14,6 +14,20 @@ import (
 	"time"
 )
 
+var h4 *H4
+
+// NewH4 Factory to initialize H4
+func NewH4(endpoint, secret, key, prefix string, verify bool) *H4 {
+	h4 = new(H4)
+	h4.Endpoint = endpoint
+	h4.Secret = secret
+	h4.Key = key
+	h4.Prefix = prefix
+	h4.Verify = verify
+
+	return h4
+}
+
 func hashSHA256(content []byte) string {
 	h := sha256.New()
 	h.Write(content)
@@ -50,13 +64,13 @@ func (h *H4) processRequest(req *http.Request) ([]byte, error) {
 
 	resp, err := client.Do(req)
 	if err != nil {
-		return nil, fmt.Errorf("Request Processing Error: %s\n", err)
+		return nil, fmt.Errorf("Request Processing Error: %s", err)
 	}
 	defer resp.Body.Close()
 
 	body, err := ioutil.ReadAll(resp.Body)
 	if err != nil {
-		return nil, fmt.Errorf("GET - ReadAll Error: %s\n", err)
+		return nil, fmt.Errorf("GET - ReadAll Error: %s", err)
 	}
 
 	switch resp.StatusCode {
@@ -144,7 +158,7 @@ func (h *H4) Get(path string) ([]byte, error) {
 
 	req, err := http.NewRequest("GET", url, nil)
 	if err != nil {
-		return nil, fmt.Errorf("GET - NewRequest Error: %s\n", err)
+		return nil, fmt.Errorf("GET - NewRequest Error: %s", err)
 	}
 	h.sign(req)
 
@@ -159,7 +173,7 @@ func (h *H4) Post(path string, json string) ([]byte, error) {
 
 	req, err := http.NewRequest("POST", url, reader)
 	if err != nil {
-		return nil, fmt.Errorf("POST - NewRequest Error: %s\n", err)
+		return nil, fmt.Errorf("POST - NewRequest Error: %s", err)
 	}
 	req.Header.Set("Content-Type", "application/json")
 
@@ -180,7 +194,7 @@ func (h *H4) Put(path string, json string) ([]byte, error) {
 
 	req, err := http.NewRequest("PUT", url, reader)
 	if err != nil {
-		return nil, fmt.Errorf("PUT - NewRequest Error: %s\n", err)
+		return nil, fmt.Errorf("PUT - NewRequest Error: %s", err)
 	}
 	req.Header.Set("Content-Type", "application/json")
 
@@ -208,7 +222,7 @@ func (h *H4) Delete(path string, json string) error {
 		req, err = http.NewRequest("DELETE", url, nil)
 	}
 	if err != nil {
-		return fmt.Errorf("DELETE - NewRequest Error: %s\n", err)
+		return fmt.Errorf("DELETE - NewRequest Error: %s", err)
 	}
 	req.Header.Set("Content-Type", "application/json")
 

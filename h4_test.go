@@ -1,6 +1,18 @@
 package goh4
 
-import "os"
+import (
+	"io/ioutil"
+	"os"
+)
+
+func loadJSONFromFile(file string) ([]byte, error) {
+	raw, err := ioutil.ReadFile(file)
+	if err != nil {
+		return nil, err
+	}
+
+	return raw, nil
+}
 
 func setupH4() *H4 {
 	var endpoint, secret, key string
@@ -23,13 +35,15 @@ func setupH4() *H4 {
 	}
 
 	// H4 object
-	h := H4{
-		Endpoint: endpoint,
-		Secret:   secret,
-		Key:      key,
-		Prefix:   "/openapi/v1",
-		Verify:   false,
-	}
+	// h := H4{
+	// 	Endpoint: endpoint,
+	// 	Secret:   secret,
+	// 	Key:      key,
+	// 	Prefix:   "/openapi/v1",
+	// 	Verify:   false,
+	// }
 
-	return &h
+	h := NewH4(endpoint, secret, key, "/openapi/v1", false)
+
+	return h
 }

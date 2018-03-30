@@ -17,37 +17,49 @@ type Scope struct {
 	VRF         int          `json:"vrf_id,omitempty"`
 }
 
+// func (s *Scope) String() string {
+// 	return s.ID
+// }
+
 // GetParent Return the parent scope as a *Scope
-func (s *Scope) GetParent() (*Scope, error) {
-	return s.h4.GetScope(s.Parent)
+func (s *Scope) GetParent() *Scope {
+	if s.h4 != nil {
+		p, err := s.h4.GetScope(s.Parent)
+		if err != nil {
+			return nil
+		}
+		return p
+	}
+
+	return nil
 }
 
 // AddScope Add a new scope
-func (h *H4) AddScope(s *Scope) (*Scope, error) {
+func (h *H4) AddScope(s *Scope) error {
 	jsonStr, err := json.Marshal(&s)
 	if err != nil {
-		return nil, fmt.Errorf("Error Marshalling scope: %s", err.Error())
+		return fmt.Errorf("Error Marshalling scope: %s", err.Error())
 	}
 	postResp, err := h.Post("/app_scopes", fmt.Sprintf("%s", jsonStr))
 	if err != nil {
-		return nil, fmt.Errorf("POST error: %s / POST: %s", err.Error(), postResp)
+		return fmt.Errorf("POST error: %s / POST: %s", err.Error(), jsonStr)
 	}
 
 	err = json.Unmarshal(postResp, &s)
 	if err != nil {
-		return nil, fmt.Errorf("Error unmarshalling JSON: %s / JSON: %s", err.Error(), postResp)
+		return fmt.Errorf("Error unmarshalling JSON: %s / JSON: %s", err.Error(), postResp)
 	}
 
 	s.h4 = h
 
-	return s, nil
+	return nil
 }
 
 // GetScope Get a single scope by ID
 func (h *H4) GetScope(id string) (*Scope, error) {
 	getResp, err := h.Get(fmt.Sprintf("/app_scopes/%s", id))
 	if err != nil {
-		return nil, fmt.Errorf("GET error: %s / GET: %s", err.Error(), getResp)
+		return nil, fmt.Errorf("GET error: %s", err.Error())
 	}
 
 	var jsonResp *Scope
@@ -65,7 +77,7 @@ func (h *H4) GetScope(id string) (*Scope, error) {
 func (h *H4) GetAllScope() ([]*Scope, error) {
 	getResp, err := h.Get(fmt.Sprintf("/app_scopes"))
 	if err != nil {
-		return nil, fmt.Errorf("GET error: %s / GET: %s", err.Error(), getResp)
+		return nil, fmt.Errorf("GET error: %s", err.Error())
 	}
 	//fmt.Printf("%s", getResp)
 
@@ -76,4 +88,31 @@ func (h *H4) GetAllScope() ([]*Scope, error) {
 	}
 
 	return jsonResp, nil
+}
+
+// DeleteScope Delete a scope by ID
+func (h *H4) DeleteScope(scopeID string) error {
+	err := h.Delete(fmt.Sprintf("/app_scopes/%s", scopeID), "")
+	if err != nil {
+		return fmt.Errorf("Error deleting scope %s: %s", scopeID, err)
+	}
+
+	return nil
+}
+
+// GetRootScope Returns the root scope for a given VRF
+func (h *H4) GetRootScope(vrf int) (*Scope, error) {
+	// First get all scopes
+	allScopes, err := h.GetAllScope()
+	if err != nil {
+		return nil, err
+	}
+
+	for v := range allScopes {
+		if allScopes[v].VRF == vrf && allScopes[v].Parent == "" {
+			return allScopes[v], nil
+		}
+	}
+
+	return nil, nil
 }

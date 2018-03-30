@@ -6,7 +6,7 @@ import (
 
 // QueryFilter defines a set of filter for a search
 type QueryFilter struct {
-	Type     string        `json:"type"`
+	Type     string        `json:"type,omitempty"`
 	Filters  []interface{} `json:"filters"`
 	IsFilter bool          `json:"-"`
 }

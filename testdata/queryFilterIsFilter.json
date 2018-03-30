@@ -1,0 +1,5 @@
+{
+  "type": "eq",
+  "field": "vrf_id",
+  "value": 0
+}

@@ -12,6 +12,7 @@ type VRF struct {
 	TenantID             int      `json:"tenant_id"`
 	SwitchVRFs           []string `json:"switch_vrfs,omitempty"`
 	ApplyCollectionRules bool     `json:"apply_monitoring_rules,string,omitempty"`
+	Scope                *Scope   `json:"-"`
 }
 
 // AddVRF Create a new VRF
@@ -22,13 +23,20 @@ func (h *H4) AddVRF(v *VRF) error {
 	}
 	postResp, err := h.Post("/vrfs", fmt.Sprintf("%s", jsonStr))
 	if err != nil {
-		return fmt.Errorf("POST error: %s / POST: %s", err.Error(), postResp)
+		return fmt.Errorf("POST error: %s / POST: %s", err.Error(), jsonStr)
 	}
 
 	err = json.Unmarshal(postResp, &v)
 	if err != nil {
 		return fmt.Errorf("Error unmarshalling JSON: %s / JSON: %s", err.Error(), postResp)
 	}
+
+	scope, err := h.GetRootScope(v.ID)
+	if err != nil {
+		return err
+	}
+
+	v.Scope = scope
 
 	return nil
 }
