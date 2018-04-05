@@ -11,7 +11,7 @@ func TestAllScope(t *testing.T) {
 	h := setupH4()
 
 	//p, err := h.GetScope("5aa6f0fb755f023c424218f3")
-	_, err := h.GetAllScope()
+	_, err := h.GetAllScopes()
 	if err != nil {
 		t.Errorf("Error in GetAllScope: %s", err.Error())
 		return

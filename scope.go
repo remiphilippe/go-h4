@@ -73,8 +73,8 @@ func (h *H4) GetScope(id string) (*Scope, error) {
 	return jsonResp, nil
 }
 
-// GetAllScope Get a single scope by ID
-func (h *H4) GetAllScope() ([]*Scope, error) {
+// GetAllScopes Get all scopes
+func (h *H4) GetAllScopes() ([]*Scope, error) {
 	getResp, err := h.Get(fmt.Sprintf("/app_scopes"))
 	if err != nil {
 		return nil, fmt.Errorf("GET error: %s", err.Error())
@@ -103,7 +103,7 @@ func (h *H4) DeleteScope(scopeID string) error {
 // GetRootScope Returns the root scope for a given VRF
 func (h *H4) GetRootScope(vrf int) (*Scope, error) {
 	// First get all scopes
-	allScopes, err := h.GetAllScope()
+	allScopes, err := h.GetAllScopes()
 	if err != nil {
 		return nil, err
 	}
