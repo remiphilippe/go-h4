@@ -95,6 +95,20 @@ func (h *H4) processRequest(req *http.Request) ([]byte, error) {
 		err = fmt.Errorf("Authorization Error (%d): %s", resp.StatusCode, body)
 	case 403:
 		err = fmt.Errorf("Authentication Error (%d): %s", resp.StatusCode, body)
+	case 404:
+		contentType := resp.Header.Get("Content-Type")
+		s := strings.Split(contentType, ";")
+		header := strings.TrimSpace(s[0])
+		if header == "application/json" {
+			jsonResp := make(map[string]string)
+			err = json.Unmarshal(body, &jsonResp)
+			if err != nil {
+				return nil, err
+			}
+			err = fmt.Errorf("Not found Error (%d): %s", resp.StatusCode, jsonResp["error"])
+		} else {
+			err = fmt.Errorf("Not found Error (%d): %s", resp.StatusCode, body)
+		}
 	default:
 		err = fmt.Errorf("Other Error (%d): %s", resp.StatusCode, body)
 	}

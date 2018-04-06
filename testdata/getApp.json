@@ -1,0 +1,13 @@
+{
+  "id": "5aa7458f497d4f3c9a2454d4",
+  "name": "POD01",
+  "app_scope_id": "5aa6f09d755f023c4b4218f1",
+  "description": null,
+  "author": "Remi Philippe",
+  "primary": true,
+  "alternate_query_mode": true,
+  "enforced_version": 2,
+  "enforcement_enabled": true,
+  "created_at": 1520911759,
+  "latest_adm_version": 3
+}

@@ -15,4 +15,10 @@ const (
 
 	// AbilityOwner OWNER
 	AbilityOwner = "SCOPE_OWNER"
+
+	// FilterInventoryFilter Is an Inventory Filter
+	FilterInventoryFilter = "UserInventoryFilter"
+
+	// FilterAppScope Is a Scope
+	FilterAppScope = "AppScope"
 )

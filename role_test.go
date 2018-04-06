@@ -91,7 +91,8 @@ func TestAddRole(t *testing.T) {
 			t.Errorf("Error in AddCapability c1: %s", err.Error())
 		}
 
-		testRole, err := h.GetRole(r.ID)
+		var testRole *Role
+		testRole, err = h.GetRole(r.ID)
 		if err != nil {
 			t.Errorf("Error in GetRole: %s", err.Error())
 		}
@@ -128,7 +129,8 @@ func TestAddRole(t *testing.T) {
 			}
 		}
 
-		testRole2, err := h.GetRole(r.ID)
+		var testRole2 *Role
+		testRole2, err = h.GetRole(r.ID)
 		if err != nil {
 			t.Errorf("Error in GetRole (testRole2): %s", err.Error())
 		}

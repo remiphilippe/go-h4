@@ -1,0 +1,604 @@
+{
+  "id": "5aa7458f497d4f3c9a2454d4",
+  "name": "POD01",
+  "app_scope_id": "5aa6f09d755f023c4b4218f1",
+  "description": null,
+  "author": "Remi Philippe",
+  "primary": true,
+  "alternate_query_mode": true,
+  "enforced_version": 2,
+  "enforcement_enabled": true,
+  "created_at": 1520911759,
+  "latest_adm_version": 3,
+  "version": "v3",
+  "absolute_policies": [],
+  "default_policies": [{
+    "consumer_filter_id": "5ac51693755f023086dbea66",
+    "provider_filter_id": "5aa6e27e497d4f3d90c6c38e",
+    "consumer_filter_name": "wordpress",
+    "provider_filter_name": "Default",
+    "l4_params": [{
+      "port": [443, 443],
+      "proto": 6
+    }],
+    "action": "ALLOW",
+    "priority": 100
+  }, {
+    "consumer_filter_id": "5ac51693755f023086dbea66",
+    "provider_filter_id": "5aa87023497d4f5c495cffde",
+    "consumer_filter_name": "wordpress",
+    "provider_filter_name": "db",
+    "l4_params": [{
+      "port": [3306, 3306],
+      "proto": 6
+    }],
+    "action": "ALLOW",
+    "priority": 100
+  }, {
+    "consumer_filter_id": "5ac51693755f023086dbea66",
+    "provider_filter_id": "5aa87023497d4f5c495cffdd",
+    "consumer_filter_name": "wordpress",
+    "provider_filter_name": "nfs",
+    "l4_params": [{
+      "port": [2049, 2049],
+      "proto": 6
+    }],
+    "action": "ALLOW",
+    "priority": 100
+  }, {
+    "consumer_filter_id": "5ac51693755f023086dbea66",
+    "provider_filter_id": "5ac51693755f023086dbea68",
+    "consumer_filter_name": "wordpress",
+    "provider_filter_name": "frontend",
+    "l4_params": [{
+      "port": [80, 80],
+      "proto": 6
+    }],
+    "action": "ALLOW",
+    "priority": 100
+  }, {
+    "consumer_filter_id": "5ac51693755f023086dbea63",
+    "provider_filter_id": "5aa87023497d4f5c495cffde",
+    "consumer_filter_name": "opencart",
+    "provider_filter_name": "db",
+    "l4_params": [{
+      "port": [3306, 3306],
+      "proto": 6
+    }],
+    "action": "ALLOW",
+    "priority": 100
+  }, {
+    "consumer_filter_id": "5ac51693755f023086dbea63",
+    "provider_filter_id": "5aa87023497d4f5c495cffdd",
+    "consumer_filter_name": "opencart",
+    "provider_filter_name": "nfs",
+    "l4_params": [{
+      "port": [2049, 2049],
+      "proto": 6
+    }],
+    "action": "ALLOW",
+    "priority": 100
+  }, {
+    "consumer_filter_id": "5ac51693755f023086dbea68",
+    "provider_filter_id": "5ac51693755f023086dbea66",
+    "consumer_filter_name": "frontend",
+    "provider_filter_name": "wordpress",
+    "l4_params": [{
+      "port": [80, 80],
+      "proto": 6
+    }],
+    "action": "ALLOW",
+    "priority": 100
+  }, {
+    "consumer_filter_id": "5ac51693755f023086dbea68",
+    "provider_filter_id": "5ac51693755f023086dbea63",
+    "consumer_filter_name": "frontend",
+    "provider_filter_name": "opencart",
+    "l4_params": [{
+      "port": [80, 80],
+      "proto": 6
+    }],
+    "action": "ALLOW",
+    "priority": 100
+  }, {
+    "consumer_filter_id": "5aa6f123497d4f3c972454d1",
+    "provider_filter_id": "5ac51693755f023086dbea68",
+    "consumer_filter_name": "Default:SJC15:Lab Infrastructure",
+    "provider_filter_name": "frontend",
+    "l4_params": [{
+      "port": [80, 80],
+      "proto": 6
+    }],
+    "action": "ALLOW",
+    "priority": 100
+  }, {
+    "consumer_filter_id": "5ac51693755f023086dbea63",
+    "provider_filter_id": "5ac51693755f023086dbea67",
+    "consumer_filter_name": "opencart",
+    "provider_filter_name": "cache",
+    "l4_params": [{
+      "port": [6379, 6379],
+      "proto": 6
+    }],
+    "action": "ALLOW",
+    "priority": 100
+  }, {
+    "consumer_filter_id": "5ac51693755f023086dbea66",
+    "provider_filter_id": "5ac4f827755f02716f42193a",
+    "consumer_filter_name": "wordpress",
+    "provider_filter_name": "Default:SJC15:Lab Infrastructure:Users",
+    "l4_params": [{
+      "port": [514, 514],
+      "proto": 17
+    }, {
+      "port": [443, 443],
+      "proto": 6
+    }],
+    "action": "ALLOW",
+    "priority": 100
+  }, {
+    "consumer_filter_id": "5ac4f954755f026f0e4218f2",
+    "provider_filter_id": "5ac51693755f023086dbea68",
+    "consumer_filter_name": "Team Cap",
+    "provider_filter_name": "frontend",
+    "l4_params": [{
+      "port": [80, 80],
+      "proto": 6
+    }],
+    "action": "ALLOW",
+    "priority": 100
+  }, {
+    "consumer_filter_id": "5ac4f883497d4f60fe2454c9",
+    "provider_filter_id": "5ac51693755f023086dbea68",
+    "consumer_filter_name": "Team Stark",
+    "provider_filter_name": "frontend",
+    "l4_params": [{
+      "port": [80, 80],
+      "proto": 6
+    }],
+    "action": "ALLOW",
+    "priority": 100
+  }],
+  "catch_all_action": "DENY",
+  "clusters": [{
+    "id": "5ac51693755f023086dbea67",
+    "consistent_uuid": "5aa74717755f02377e8d72ec",
+    "name": "cache",
+    "approved": true,
+    "nodes": [{
+      "ip": "172.21.201.51",
+      "name": "pod01-redis01"
+    }],
+    "external": false,
+    "cluster_queries": [{
+      "values": ["172.21.201.51"],
+      "field": "ip",
+      "type": "in"
+    }, {
+      "field": "user_role",
+      "type": "eq",
+      "value": "object-cache"
+    }, {
+      "field": "host_name",
+      "type": "eq",
+      "value": "pod01-redis01"
+    }, {
+      "field": "user_role",
+      "type": "contains",
+      "value": "object-cache"
+    }, {
+      "field": "user_app",
+      "type": "contains",
+      "value": "memcache"
+    }, {
+      "field": "user_app",
+      "type": "eq",
+      "value": "memcache"
+    }, {
+      "field": "host_name",
+      "type": "contains",
+      "value": "pod01-redis01"
+    }],
+    "alternate_selected": true,
+    "short_query": {
+      "field": "user_role",
+      "type": "eq",
+      "value": "object-cache"
+    }
+  }, {
+    "id": "5aa87023497d4f5c495cffde",
+    "consistent_uuid": "5aa87023497d4f5c495cffde",
+    "name": "db",
+    "approved": true,
+    "nodes": [{
+      "ip": "172.21.251.10",
+      "name": "s01-haproxy01"
+    }],
+    "external": true,
+    "parent_application": {
+      "id": "5aa86f7e497d4f14cb2454dc",
+      "name": "Shared Environment"
+    },
+    "cluster_queries": [{
+      "values": ["172.21.251.10"],
+      "field": "ip",
+      "type": "in"
+    }, {
+      "field": "host_name",
+      "type": "contains",
+      "value": "s01-haproxy01"
+    }, {
+      "field": "user_role",
+      "type": "eq",
+      "value": "load-balancer"
+    }, {
+      "field": "user_role",
+      "type": "contains",
+      "value": "load-balancer"
+    }, {
+      "field": "user_app",
+      "type": "contains",
+      "value": "haproxy"
+    }, {
+      "field": "host_name",
+      "type": "eq",
+      "value": "s01-haproxy01"
+    }, {
+      "field": "user_app",
+      "type": "eq",
+      "value": "haproxy"
+    }],
+    "alternate_selected": true,
+    "short_query": {
+      "field": "user_app",
+      "type": "eq",
+      "value": "haproxy"
+    }
+  }, {
+    "id": "5ac51693755f023086dbea68",
+    "consistent_uuid": "5aa74717755f02377e8d72ed",
+    "name": "frontend",
+    "approved": true,
+    "nodes": [{
+      "ip": "172.21.201.11",
+      "name": "pod01-haproxy01"
+    }],
+    "external": false,
+    "cluster_queries": [{
+      "values": ["172.21.201.11"],
+      "field": "ip",
+      "type": "in"
+    }, {
+      "field": "user_role",
+      "type": "eq",
+      "value": "load-balancer"
+    }, {
+      "field": "user_app",
+      "type": "contains",
+      "value": "haproxy"
+    }, {
+      "field": "user_role",
+      "type": "contains",
+      "value": "load-balancer"
+    }, {
+      "field": "user_app",
+      "type": "eq",
+      "value": "haproxy"
+    }, {
+      "field": "host_name",
+      "type": "eq",
+      "value": "pod01-haproxy01"
+    }, {
+      "field": "host_name",
+      "type": "contains",
+      "value": "pod01-haproxy01"
+    }],
+    "alternate_selected": true,
+    "short_query": {
+      "field": "user_role",
+      "type": "eq",
+      "value": "load-balancer"
+    }
+  }, {
+    "id": "5aa87023497d4f5c495cffdd",
+    "consistent_uuid": "5aa87023497d4f5c495cffdd",
+    "name": "nfs",
+    "approved": true,
+    "nodes": [{
+      "ip": "172.21.251.21",
+      "name": "s01-nfs01"
+    }],
+    "external": true,
+    "parent_application": {
+      "id": "5aa86f7e497d4f14cb2454dc",
+      "name": "Shared Environment"
+    },
+    "cluster_queries": [{
+      "values": ["172.21.251.21"],
+      "field": "ip",
+      "type": "in"
+    }, {
+      "field": "user_app",
+      "type": "eq",
+      "value": "nfs"
+    }, {
+      "field": "host_name",
+      "type": "eq",
+      "value": "s01-nfs01"
+    }, {
+      "field": "user_role",
+      "type": "contains",
+      "value": "file-server"
+    }, {
+      "field": "host_name",
+      "type": "contains",
+      "value": "s01-nfs01"
+    }, {
+      "field": "user_app",
+      "type": "contains",
+      "value": "nfs"
+    }, {
+      "field": "user_role",
+      "type": "eq",
+      "value": "file-server"
+    }],
+    "alternate_selected": true,
+    "short_query": {
+      "field": "user_role",
+      "type": "eq",
+      "value": "file-server"
+    }
+  }, {
+    "id": "5ac51693755f023086dbea63",
+    "consistent_uuid": "5aa74717755f02377e8d72e8",
+    "name": "opencart",
+    "approved": true,
+    "nodes": [{
+      "ip": "172.21.201.41",
+      "name": "pod01-oc01"
+    }, {
+      "ip": "172.21.201.42",
+      "name": "pod01-oc02"
+    }],
+    "external": false,
+    "cluster_queries": [{
+      "values": ["172.21.201.41", "172.21.201.42"],
+      "field": "ip",
+      "type": "in"
+    }, {
+      "field": "user_app",
+      "type": "contains",
+      "value": "opencart"
+    }, {
+      "field": "user_app",
+      "type": "eq",
+      "value": "opencart"
+    }, {
+      "field": "host_name",
+      "type": "contains",
+      "value": "pod01-oc0"
+    }],
+    "alternate_selected": true,
+    "short_query": {
+      "field": "user_app",
+      "type": "eq",
+      "value": "opencart"
+    }
+  }, {
+    "id": "5ac51693755f023086dbea66",
+    "consistent_uuid": "5aa74717755f02377e8d72eb",
+    "name": "wordpress",
+    "approved": true,
+    "nodes": [{
+      "ip": "172.21.201.31",
+      "name": "pod01-wp01"
+    }, {
+      "ip": "172.21.201.32",
+      "name": "pod01-wp02"
+    }],
+    "external": false,
+    "cluster_queries": [{
+      "values": ["172.21.201.31", "172.21.201.32"],
+      "field": "ip",
+      "type": "in"
+    }, {
+      "field": "host_name",
+      "type": "contains",
+      "value": "pod01-wp0"
+    }, {
+      "field": "user_app",
+      "type": "eq",
+      "value": "wordpress"
+    }, {
+      "field": "user_app",
+      "type": "contains",
+      "value": "wordpress"
+    }],
+    "alternate_selected": true,
+    "short_query": {
+      "field": "user_app",
+      "type": "eq",
+      "value": "wordpress"
+    }
+  }],
+  "inventory_filters": [{
+    "id": "5aa6e27e497d4f3d90c6c38e",
+    "filter_type": "AppScope",
+    "name": "Default",
+    "query": {
+      "type": "eq",
+      "field": "vrf_id",
+      "value": 1
+    }
+  }, {
+    "id": "5aa6f123497d4f3c972454d1",
+    "filter_type": "AppScope",
+    "name": "Default:SJC15:Lab Infrastructure",
+    "query": {
+      "type": "and",
+      "filters": [{
+        "field": "vrf_id",
+        "type": "eq",
+        "value": 1
+      }, {
+        "type": "or",
+        "filters": [{
+          "field": "ip",
+          "type": "subnet",
+          "value": "172.20.0.0/16"
+        }, {
+          "field": "ip",
+          "type": "subnet",
+          "value": "172.21.0.0/16"
+        }]
+      }, {
+        "field": "ip",
+        "type": "subnet",
+        "value": "172.20.0.0/16"
+      }]
+    },
+    "parent_app_scope": {
+      "id": "5aa6eefc497d4f3c972454cb",
+      "name": "Default:SJC15"
+    }
+  }, {
+    "id": "5ac4f827755f02716f42193a",
+    "filter_type": "AppScope",
+    "name": "Default:SJC15:Lab Infrastructure:Users",
+    "query": {
+      "type": "and",
+      "filters": [{
+        "field": "vrf_id",
+        "type": "eq",
+        "value": 1
+      }, {
+        "type": "or",
+        "filters": [{
+          "field": "ip",
+          "type": "subnet",
+          "value": "172.20.0.0/16"
+        }, {
+          "field": "ip",
+          "type": "subnet",
+          "value": "172.21.0.0/16"
+        }]
+      }, {
+        "field": "ip",
+        "type": "subnet",
+        "value": "172.20.0.0/16"
+      }, {
+        "type": "or",
+        "filters": [{
+          "field": "ip",
+          "type": "eq",
+          "value": "172.20.0.25"
+        }, {
+          "field": "ip",
+          "type": "eq",
+          "value": "172.20.0.26"
+        }]
+      }]
+    },
+    "parent_app_scope": {
+      "id": "5aa6f123497d4f3c972454d1",
+      "name": "Default:SJC15:Lab Infrastructure"
+    }
+  }, {
+    "id": "5ac4f954755f026f0e4218f2",
+    "filter_type": "UserInventoryFilter",
+    "name": "Team Cap",
+    "query": {
+      "type": "and",
+      "filters": [{
+        "field": "vrf_id",
+        "type": "eq",
+        "value": 1
+      }, {
+        "type": "or",
+        "filters": [{
+          "field": "ip",
+          "type": "subnet",
+          "value": "172.20.0.0/16"
+        }, {
+          "field": "ip",
+          "type": "subnet",
+          "value": "172.21.0.0/16"
+        }]
+      }, {
+        "field": "ip",
+        "type": "subnet",
+        "value": "172.20.0.0/16"
+      }, {
+        "type": "or",
+        "filters": [{
+          "field": "ip",
+          "type": "eq",
+          "value": "172.20.0.25"
+        }, {
+          "field": "ip",
+          "type": "eq",
+          "value": "172.20.0.26"
+        }]
+      }, {
+        "field": "user_sgt",
+        "type": "eq",
+        "value": "17"
+      }]
+    },
+    "parent_app_scope": {
+      "id": "5ac4f827755f02716f42193a",
+      "name": "Default:SJC15:Lab Infrastructure:Users"
+    }
+  }, {
+    "id": "5ac4f883497d4f60fe2454c9",
+    "filter_type": "UserInventoryFilter",
+    "name": "Team Stark",
+    "query": {
+      "type": "and",
+      "filters": [{
+        "field": "vrf_id",
+        "type": "eq",
+        "value": 1
+      }, {
+        "type": "or",
+        "filters": [{
+          "field": "ip",
+          "type": "subnet",
+          "value": "172.20.0.0/16"
+        }, {
+          "field": "ip",
+          "type": "subnet",
+          "value": "172.21.0.0/16"
+        }]
+      }, {
+        "field": "ip",
+        "type": "subnet",
+        "value": "172.20.0.0/16"
+      }, {
+        "type": "or",
+        "filters": [{
+          "field": "ip",
+          "type": "eq",
+          "value": "172.20.0.25"
+        }, {
+          "field": "ip",
+          "type": "eq",
+          "value": "172.20.0.26"
+        }]
+      }, {
+        "field": "user_sgt",
+        "type": "eq",
+        "value": "16"
+      }]
+    },
+    "parent_app_scope": {
+      "id": "5ac4f827755f02716f42193a",
+      "name": "Default:SJC15:Lab Infrastructure:Users"
+    }
+  }],
+  "vrf": {
+    "id": 1,
+    "name": "Default",
+    "tenant_id": 0,
+    "tenant_name": "Default"
+  }
