@@ -2,6 +2,7 @@ package goh4
 
 import (
 	"encoding/json"
+	"time"
 )
 
 // QueryFilter defines a set of filter for a search
@@ -98,4 +99,40 @@ type InventoryQuery struct {
 	Scope  string       `json:"scopeName,omitempty"`
 	Limit  int          `json:"limit"`
 	Offset int          `json:"offset,omitempty"`
+}
+
+// FlowQuery defines a search query for flows
+type FlowQuery struct {
+	Filter      *QueryFilter `json:"filter"`
+	Dimensions  []string     `json:"dimensions,omitempty"`
+	Metrics     []string     `json:"-"`
+	Scope       string       `json:"scopeName,omitempty"`
+	Limit       int          `json:"limit"`
+	Offset      string       `json:"offset,omitempty"`
+	T0          time.Time    `json:"t0,omitempty"`
+	T1          time.Time    `json:"t1,omitempty"`
+	WithMetrics bool         `json:"-"`
+}
+
+// MarshalJSON Converts Struct to JSON
+func (f *FlowQuery) MarshalJSON() ([]byte, error) {
+	type Alias FlowQuery
+
+	if f.WithMetrics == false {
+		return json.Marshal(&struct {
+			TheMetrics []string `json:"metrics"`
+			*Alias
+		}{
+			TheMetrics: []string{},
+			Alias:      (*Alias)(f),
+		})
+	}
+
+	return json.Marshal(&struct {
+		TheMetrics []string `json:"metrics,omitempty"`
+		*Alias
+	}{
+		TheMetrics: f.Metrics,
+		Alias:      (*Alias)(f),
+	})
 }

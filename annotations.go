@@ -8,6 +8,7 @@ import (
 	"log"
 	"mime/multipart"
 	"net/http"
+	"strings"
 
 	"github.com/golang/glog"
 )
@@ -71,20 +72,18 @@ func (h *H4) DeleteAnnotation(scope, ip string) error {
 }
 
 // UploadAnnotation Upload an annotation file to Tetration OpenAPI. Data is a CSV format
-func (h *H4) UploadAnnotation(data []byte, add bool, ipVrfKey bool) ([]byte, error) {
+func (h *H4) UploadAnnotation(data []byte, operation, scope string) ([]byte, error) {
 	body := new(bytes.Buffer)
 	writer := multipart.NewWriter(body)
+	// Tim says it mimics the python client
 	writer.SetBoundary("CiscoTetrationClient")
-	if ipVrfKey {
-		writer.WriteField("X-Tetration-Key", "[\"IP\", \"VRF\"]")
-	} else {
-		writer.WriteField("X-Tetration-Key", "[\"Hostname\"]")
+
+	if strings.ToLower(operation) != "add" || strings.ToLower(operation) != "delete" || strings.ToLower(operation) != "overwrite" {
+		glog.Errorf("Looks like the operation is not supported, should be add, overwrite or delete but got %s", operation)
+		return nil, fmt.Errorf("Looks like the operation is not supported, should be add, overwrite or delete but got %s", operation)
 	}
-	if add {
-		writer.WriteField("X-Tetration-Oper", "add")
-	} else {
-		writer.WriteField("X-Tetration-Oper", "delete")
-	}
+
+	writer.WriteField("X-Tetration-Oper", strings.ToLower(operation))
 
 	part, err := writer.CreateFormFile("file", "filename")
 	if err != nil {
@@ -100,7 +99,7 @@ func (h *H4) UploadAnnotation(data []byte, add bool, ipVrfKey bool) ([]byte, err
 
 	writer.Close()
 
-	url := h.url("/assets/cmdb/upload")
+	url := h.url(fmt.Sprintf("/assets/cmdb/upload/%s", scope))
 	req, err := http.NewRequest("POST", url, body)
 	if err != nil {
 		glog.Errorf("GET - NewRequest Error: %s\n", err)
