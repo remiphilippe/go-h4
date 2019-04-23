@@ -78,7 +78,7 @@ func (h *H4) UploadAnnotation(data []byte, operation, scope string) ([]byte, err
 	// Tim says it mimics the python client
 	writer.SetBoundary("CiscoTetrationClient")
 
-	if strings.ToLower(operation) != "add" || strings.ToLower(operation) != "delete" || strings.ToLower(operation) != "overwrite" {
+	if strings.ToLower(operation) != "add" && strings.ToLower(operation) != "delete" && strings.ToLower(operation) != "overwrite" {
 		glog.Errorf("Looks like the operation is not supported, should be add, overwrite or delete but got %s", operation)
 		return nil, fmt.Errorf("Looks like the operation is not supported, should be add, overwrite or delete but got %s", operation)
 	}
