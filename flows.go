@@ -36,7 +36,9 @@ func (h *H4) GetFlows(q *FlowQuery) (*FlowResults, error) {
 			fres.Results = append(fres.Results, r.Results...)
 			offset = r.Offset
 			limit = limit + len(r.Results)
-			fmt.Printf("offset: %s, limit: %d\n", offset, limit)
+			if false {
+				fmt.Printf("offset: %s, limit: %d\n", offset, limit)
+			}
 
 			if (maxLimit == 0 || limit < maxLimit) && offset != "" {
 				go h.getFlows(q, offset, res)
