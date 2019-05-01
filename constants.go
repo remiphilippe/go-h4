@@ -21,4 +21,7 @@ const (
 
 	// FilterAppScope Is a Scope
 	FilterAppScope = "AppScope"
+
+	// TetrationFlowQueryLimit Maximum requests per query
+	TetrationFlowQueryLimit = 5000
 )

@@ -9,9 +9,12 @@ import (
 	"encoding/json"
 	"fmt"
 	"io/ioutil"
+	"net"
 	"net/http"
 	"strings"
 	"time"
+
+	"github.com/viki-org/dnscache"
 )
 
 var h4 *H4
@@ -19,6 +22,7 @@ var h4 *H4
 // NewH4 Factory to initialize H4
 func NewH4(endpoint, secret, key, prefix string, verify bool) *H4 {
 	h4 = new(H4)
+	h4.resolver = dnscache.New(time.Minute * 5)
 	h4.Endpoint = endpoint
 	h4.Secret = secret
 	h4.Key = key
@@ -58,7 +62,16 @@ func (h *H4) processRequest(req *http.Request) ([]byte, error) {
 	}
 
 	tr := &http.Transport{
-		TLSClientConfig: &tls.Config{InsecureSkipVerify: insecureVerify},
+		TLSClientConfig:     &tls.Config{InsecureSkipVerify: insecureVerify},
+		MaxIdleConnsPerHost: 64,
+		Dial: func(network string, address string) (net.Conn, error) {
+			separator := strings.LastIndex(address, ":")
+			ip, err := h.resolver.FetchOneString(address[:separator])
+			if err != nil {
+				return nil, err
+			}
+			return net.Dial("tcp", ip+address[separator:])
+		},
 	}
 	client := &http.Client{Transport: tr}
 
@@ -117,6 +130,9 @@ func (h *H4) processRequest(req *http.Request) ([]byte, error) {
 		return nil, err
 	}
 
+	tr.CloseIdleConnections()
+	resp = nil
+
 	return body, nil
 }
 
@@ -127,6 +143,7 @@ type H4 struct {
 	Key      string
 	Secret   string
 	Verify   bool
+	resolver *dnscache.Resolver
 }
 
 func (h *H4) hash(request *http.Request) *http.Request {
