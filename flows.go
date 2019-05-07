@@ -3,8 +3,6 @@ package goh4
 import (
 	"encoding/json"
 	"fmt"
-
-	"github.com/golang/glog"
 )
 
 // FlowResults results of a flow search
@@ -28,6 +26,8 @@ func (h *H4) GetFlows(q *FlowQuery) (*FlowResults, error) {
 	defer close(res)
 	done := make(chan bool)
 	defer close(done)
+	err := make(chan error, 1)
+	defer close(err)
 
 	fres := new(FlowResults)
 
@@ -41,36 +41,48 @@ func (h *H4) GetFlows(q *FlowQuery) (*FlowResults, error) {
 			}
 
 			if (maxLimit == 0 || limit < maxLimit) && offset != "" {
-				go h.getFlows(q, offset, res)
+				go h.getFlows(q, offset, res, err)
 			} else {
 				done <- true
 			}
 		}
 	}()
 
-	h.getFlows(q, offset, res)
+	h.getFlows(q, offset, res, err)
+
+	select {
+	case <-done:
+	case e := <-err:
+		if e != nil {
+			return nil, e
+		}
+	}
+
 	<-done
 
 	return fres, nil
 }
 
-func (h *H4) getFlows(q *FlowQuery, offset string, fres chan *FlowResults) {
-	var err error
+func (h *H4) getFlows(q *FlowQuery, offset string, fres chan *FlowResults, err chan error) {
+	var e error
 	q.Offset = offset
-	j, err := json.Marshal(q)
-	if err != nil {
-		glog.Errorf("Error: %s\n", err)
+	j, e := json.Marshal(q)
+	if e != nil {
+		err <- e
+		return
 	}
 
-	r, err := h.Post("/flowsearch", string(j))
-	if err != nil {
-		glog.Errorf("Error: %s\n", err)
+	r, e := h.Post("/flowsearch", string(j))
+	if e != nil {
+		err <- e
+		return
 	}
 
 	var res *FlowResults
-	err = json.Unmarshal(r, &res)
-	if err != nil {
-		glog.Errorf("Error: %s\n", err)
+	e = json.Unmarshal(r, &res)
+	if e != nil {
+		err <- e
+		return
 	}
 
 	// Some debug stuff we should remove later
