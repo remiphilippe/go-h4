@@ -58,8 +58,6 @@ func (h *H4) GetFlows(q *FlowQuery) (*FlowResults, error) {
 		}
 	}
 
-	<-done
-
 	return fres, nil
 }
 
