@@ -72,6 +72,7 @@ func (h *H4) processRequest(req *http.Request) ([]byte, error) {
 			}
 			return net.Dial("tcp", ip+address[separator:])
 		},
+		Proxy: http.ProxyFromEnvironment,
 	}
 	client := &http.Client{Transport: tr}
 

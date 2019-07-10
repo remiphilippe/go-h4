@@ -116,3 +116,19 @@ func (h *H4) GetRootScope(vrf int) (*Scope, error) {
 
 	return nil, nil
 }
+
+// GetScopeByName Returns a scope based on it's name
+func (h *H4) GetScopeByName(name string) (*Scope, error) {
+	scopes, err := h.GetAllScopes()
+	if err != nil {
+		return nil, err
+	}
+
+	for _, s := range scopes {
+		if s.Name == name {
+			return s, nil
+		}
+	}
+
+	return nil, nil
+}

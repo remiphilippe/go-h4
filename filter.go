@@ -7,10 +7,59 @@ import (
 
 // InventoryFilter struct representingan InventoryFilter
 type InventoryFilter struct {
-	ID    string       `json:"id,omitempty"`
-	Name  string       `json:"name"`
-	Query *QueryFilter `json:"query"`
-	Type  string       `json:"filter_type"`
+	ID         string       `json:"id,omitempty"`
+	Name       string       `json:"name"`
+	Scope      *Scope       `json:"app_scope_id"`
+	Query      *QueryFilter `json:"query"`
+	ShortQuery *QueryFilter `json:"short_query,omitempty"`
+	Primary    bool         `json:"primary"`
+	Type       string       `json:"filter_type,omitempty"`
+}
+
+// MarshalJSON Converts Struct to JSON
+func (f *InventoryFilter) MarshalJSON() ([]byte, error) {
+	type Alias InventoryFilter
+	return json.Marshal(&struct {
+		Scope string `json:"app_scope_id"`
+		*Alias
+	}{
+		Scope: f.Scope.ID,
+		Alias: (*Alias)(f),
+	})
+}
+
+// UnmarshalJSON Converts JSON to struct
+func (f *InventoryFilter) UnmarshalJSON(data []byte) error {
+	var err error
+	type Alias InventoryFilter
+
+	aux := &struct {
+		Scope string `json:"app_scope_id"`
+		*Alias
+	}{
+		Alias: (*Alias)(f),
+	}
+
+	if err = json.Unmarshal(data, &aux); err != nil {
+		return err
+	}
+	if h4 != nil {
+		var scope *Scope
+
+		if aux.Scope != "" {
+			scope, err = h4.GetScope(aux.Scope)
+			if err != nil {
+				return err
+			}
+		} else {
+			scope = nil
+		}
+
+		f.Scope = scope
+	} else {
+		return fmt.Errorf("H4 is not defined")
+	}
+	return nil
 }
 
 // GetFilter Get a single application by ID
@@ -45,4 +94,33 @@ func (h *H4) GetAllFilters() ([]*InventoryFilter, error) {
 	}
 
 	return jsonResp, nil
+}
+
+// AddFilter Add a new filter
+func (h *H4) AddFilter(f *InventoryFilter) error {
+	jsonStr, err := json.Marshal(&f)
+	if err != nil {
+		return fmt.Errorf("Error Marshalling inventory filter %s", err)
+	}
+	postResp, err := h.Post("/filters/inventories", fmt.Sprintf("%s", jsonStr))
+	if err != nil {
+		return fmt.Errorf("POST error: %s / POST: %s", err.Error(), jsonStr)
+	}
+
+	err = json.Unmarshal(postResp, &f)
+	if err != nil {
+		return fmt.Errorf("Error unmarshalling JSON: %s / JSON: %s", err.Error(), postResp)
+	}
+
+	return nil
+}
+
+// DeleteFilter Delete a Filter
+func (h *H4) DeleteFilter(filterID string) error {
+	err := h.Delete(fmt.Sprintf("/filters/inventories/%s", filterID), "")
+	if err != nil {
+		return fmt.Errorf("Error deleting role %s: %s", filterID, err)
+	}
+
+	return nil
 }
