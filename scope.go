@@ -70,6 +70,8 @@ func (h *H4) GetScope(id string) (*Scope, error) {
 		return nil, fmt.Errorf("Error unmarshalling JSON: %s / JSON: %s", err.Error(), getResp)
 	}
 
+	jsonResp.h4 = h
+
 	return jsonResp, nil
 }
 

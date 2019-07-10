@@ -78,8 +78,9 @@ func (a *Application) UnmarshalJSON(data []byte) error {
 
 // L4Params struct representing L4 information (TCP / UDP / Port...)
 type L4Params struct {
-	Proto int   `json:"proto"`
-	Port  []int `json:"port"`
+	ID    string `json:"id,omitempty"`
+	Proto int    `json:"proto"`
+	Port  []int  `json:"port"`
 }
 
 // ApplicationPolicy Policy defined within an Application workspace
@@ -187,6 +188,16 @@ func (h *H4) GetApplication(id string) (*Application, error) {
 
 	jsonResp.h4 = h
 
+	jsonResp.AbsolutePolicies, err = jsonResp.GetAbsolutePolicies()
+	if err != nil {
+		return nil, fmt.Errorf("error getting absolute policies: %s", err.Error())
+	}
+
+	jsonResp.DefaultPolicies, err = jsonResp.GetDefaultPolicies()
+	if err != nil {
+		return nil, fmt.Errorf("error getting default policies: %s", err.Error())
+	}
+
 	return jsonResp, nil
 }
 
@@ -282,6 +293,44 @@ func (h *H4) UpdateApplication(a *Application) error {
 	return nil
 }
 
+func (a *Application) getPolicies(polType string) ([]*ApplicationPolicy, error) {
+	var getURL string
+
+	if polType == "default" || polType == "" {
+		getURL = fmt.Sprintf("/applications/%s/default_policies", a.ID)
+	} else {
+		getURL = fmt.Sprintf("/applications/%s/absolute_policies", a.ID)
+	}
+
+	getResp, err := a.h4.Get(getURL)
+	if err != nil {
+		return nil, fmt.Errorf("GET error: %s", err.Error())
+	}
+	//fmt.Printf("%s", getResp)
+
+	var jsonResp []*ApplicationPolicy
+	err = json.Unmarshal(getResp, &jsonResp)
+	if err != nil {
+		return nil, fmt.Errorf("Error unmarshalling JSON: %s / JSON: %s", err.Error(), getResp)
+	}
+
+	for i := range jsonResp {
+		jsonResp[i].a = a
+	}
+
+	return jsonResp, nil
+}
+
+// GetDefaultPolicies Get Default Policies
+func (a *Application) GetDefaultPolicies() ([]*ApplicationPolicy, error) {
+	return a.getPolicies("default")
+}
+
+// GetAbsolutePolicies Get Absolute Policies
+func (a *Application) GetAbsolutePolicies() ([]*ApplicationPolicy, error) {
+	return a.getPolicies("absolute")
+}
+
 func (a *Application) addPolicy(p *ApplicationPolicy, polType string) error {
 	var postURL string
 	jsonStr, err := json.Marshal(&p)
@@ -320,6 +369,33 @@ func (a *Application) AddAbsolutePolicy(p *ApplicationPolicy) error {
 	return a.addPolicy(p, "absolute")
 }
 
+func (a *Application) deletePolicy(policyID string, polType string) error {
+	var deleteURL string
+
+	if polType == "default" || polType == "" {
+		deleteURL = fmt.Sprintf("/policies/%s", policyID)
+	} else {
+		deleteURL = fmt.Sprintf("/policies/%s", policyID)
+	}
+
+	err := a.h4.Delete(deleteURL, "")
+	if err != nil {
+		return fmt.Errorf("Error deleting policy %s: %s", policyID, err)
+	}
+
+	return nil
+}
+
+// DeleteDefaultPolicy Deletes a Default Policy
+func (a *Application) DeleteDefaultPolicy(policyID string) error {
+	return a.deletePolicy(policyID, "default")
+}
+
+// DeleteAbsolutePolicy Deletes a Default Policy
+func (a *Application) DeleteAbsolutePolicy(policyID string) error {
+	return a.deletePolicy(policyID, "absolute")
+}
+
 // AddServicePort Adds a Service Port to a Policy
 func (ap *ApplicationPolicy) AddServicePort(start, end, proto int) error {
 	m := make(map[string]interface{})
@@ -343,6 +419,16 @@ func (ap *ApplicationPolicy) AddServicePort(start, end, proto int) error {
 	return nil
 }
 
+// DeleteServicePort removes a service port
+func (ap *ApplicationPolicy) DeleteServicePort(serviceID string) error {
+	err := ap.a.h4.Delete(fmt.Sprintf("/policies/%s/l4_params/%s", ap.ID, serviceID), "")
+	if err != nil {
+		return fmt.Errorf("Error deleting service port %s: %s", serviceID, err)
+	}
+
+	return nil
+}
+
 // GetApplicationByName Returns a scope based on it's name
 func (h *H4) GetApplicationByName(name string) (*Application, error) {
 	apps, err := h.GetAllApplications(false)
@@ -357,4 +443,31 @@ func (h *H4) GetApplicationByName(name string) (*Application, error) {
 	}
 
 	return nil, nil
+}
+
+// SetEnforce enables or disables enforcement on a workspace
+func (a *Application) SetEnforce(enable bool) error {
+	var postURL string
+	if enable {
+		postURL = fmt.Sprintf("/applications/%s/enable_enforce", a.ID)
+	} else {
+		postURL = fmt.Sprintf("/applications/%s/disable_enforce", a.ID)
+	}
+	_, err := a.h4.Post(postURL, "")
+	if err != nil {
+		return fmt.Errorf("POST error: %s", err.Error())
+	}
+
+	return nil
+}
+
+// SetPrimary enables or disables primary on a workspace
+func (a *Application) SetPrimary(enable bool) error {
+	a.Primary = enable
+	err := a.h4.UpdateApplication(a)
+	if err != nil {
+		return fmt.Errorf("update errorr: %s", err.Error())
+	}
+
+	return nil
 }

@@ -3,13 +3,15 @@ package goh4
 import (
 	"encoding/json"
 	"fmt"
+
+	"github.com/golang/glog"
 )
 
 // InventoryFilter struct representingan InventoryFilter
 type InventoryFilter struct {
 	ID         string       `json:"id,omitempty"`
 	Name       string       `json:"name"`
-	Scope      *Scope       `json:"app_scope_id"`
+	Scope      *Scope       //`json:"app_scope_id"` //this is overriden in unmarshall
 	Query      *QueryFilter `json:"query"`
 	ShortQuery *QueryFilter `json:"short_query,omitempty"`
 	Primary    bool         `json:"primary"`
@@ -18,6 +20,10 @@ type InventoryFilter struct {
 
 // MarshalJSON Converts Struct to JSON
 func (f *InventoryFilter) MarshalJSON() ([]byte, error) {
+	if f.Scope == nil {
+		return nil, fmt.Errorf("scope is not defined")
+	}
+
 	type Alias InventoryFilter
 	return json.Marshal(&struct {
 		Scope string `json:"app_scope_id"`
@@ -34,20 +40,22 @@ func (f *InventoryFilter) UnmarshalJSON(data []byte) error {
 	type Alias InventoryFilter
 
 	aux := &struct {
-		Scope string `json:"app_scope_id"`
+		// TODO: check this out, doesn't make sense to change the json struct
+		Scope map[string]string `json:"parent_app_scope"`
 		*Alias
 	}{
 		Alias: (*Alias)(f),
 	}
 
 	if err = json.Unmarshal(data, &aux); err != nil {
+		glog.Errorf("err: %s\n", err)
 		return err
 	}
 	if h4 != nil {
 		var scope *Scope
 
-		if aux.Scope != "" {
-			scope, err = h4.GetScope(aux.Scope)
+		if _, ok := aux.Scope["id"]; ok {
+			scope, err = h4.GetScope(aux.Scope["id"])
 			if err != nil {
 				return err
 			}
@@ -94,6 +102,24 @@ func (h *H4) GetAllFilters() ([]*InventoryFilter, error) {
 	}
 
 	return jsonResp, nil
+}
+
+// GetFiltersByScope Get all filters for a scope
+func (h *H4) GetFiltersByScope(scope *Scope) ([]*InventoryFilter, error) {
+	var filters []*InventoryFilter
+
+	iFilters, err := h.GetAllFilters()
+	if err != nil {
+		return nil, fmt.Errorf("GET error: %s", err.Error())
+	}
+
+	for _, f := range iFilters {
+		if f.Scope.ID == scope.ID {
+			filters = append(filters, f)
+		}
+	}
+
+	return filters, nil
 }
 
 // AddFilter Add a new filter
