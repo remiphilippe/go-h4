@@ -96,6 +96,16 @@ func (h *H4) processRequest(req *http.Request) ([]byte, error) {
 		header := strings.TrimSpace(s[0])
 
 		if header == "application/json" {
+			// TODO: handle the details
+			// {
+			// 	"details": [
+			// 		{
+			// 			"warning": "unknown keys in base hash: [\"strict_validation\", \"controller\", \"action\", \"application\"]"
+			// 		}
+			// 	],
+			// 	"error": "error(s) in the json policy data",
+			// 	"status": "bad_request"
+			// }
 			jsonResp := make(map[string]string)
 			err = json.Unmarshal(body, &jsonResp)
 			if err != nil {

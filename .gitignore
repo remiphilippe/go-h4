@@ -16,5 +16,6 @@
 .envrc
 .env
 
+scratch
 test.go
 go-h4

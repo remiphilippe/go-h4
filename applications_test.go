@@ -19,7 +19,7 @@ func TestGetApplication(t *testing.T) {
 	t.Log("Starting TestGetApplication Test")
 	h := setupH4()
 
-	_, err := h.GetApplication("5aa7458f497d4f3c9a2454d4")
+	_, err := h.GetApplication("5f8fb81d497d4f5453e657a3")
 	if err != nil {
 		t.Errorf("Error in GetApplication: %s", err.Error())
 		return

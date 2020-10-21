@@ -12,7 +12,6 @@ type Application struct {
 	Name               string                `json:"name"`
 	Description        string                `json:"description"`
 	Author             string                `json:"author,omitempty"`
-	StrictValidation   bool                  `json:"strict_validation"`
 	Primary            bool                  `json:"primary"`
 	AlternateQueryMode bool                  `json:"alternate_query_mode"`
 	LatestVersion      int                   `json:"latest_adm_version,omitempty"`
@@ -70,6 +69,77 @@ func (a *Application) UnmarshalJSON(data []byte) error {
 		}
 
 		a.Scope = scope
+	} else {
+		return fmt.Errorf("H4 is not defined")
+	}
+	return nil
+}
+
+type WhatIfRequest struct {
+	ConsumerIP   string `json:"consumer_ip"`
+	ProviderIP   string `json:"provider_ip"`
+	ProviderPort int    `json:"provider_port"`
+	Protocol     string `json:"protocol"`
+	AnalysisType string `json:"analysis_type"`
+}
+
+type WhatIfResult struct {
+	Decision string        `json:"policy_decision"`
+	Outbound *WhatIfPolicy `json:"outbound_policy"`
+	Inbound  *WhatIfPolicy `json:"inbound_policy"`
+}
+
+type WhatIfPolicy struct {
+	Rank   string `json:"policy_rank"`
+	Scope  *Scope `json:"app_scope_id"`
+	Action string `json:"action"`
+	Label  string `json:"label_name"`
+}
+
+// MarshalJSON Converts Struct to JSON
+func (w *WhatIfPolicy) MarshalJSON() ([]byte, error) {
+	if w.Scope == nil {
+		return nil, fmt.Errorf("scope is not defined")
+	}
+
+	type Alias WhatIfPolicy
+	return json.Marshal(&struct {
+		Scope string `json:"app_scope_id"`
+		*Alias
+	}{
+		Scope: w.Scope.ID,
+		Alias: (*Alias)(w),
+	})
+}
+
+// UnmarshalJSON Converts JSON to struct
+func (w *WhatIfPolicy) UnmarshalJSON(data []byte) error {
+	var err error
+	type Alias WhatIfPolicy
+
+	aux := &struct {
+		Scope string `json:"app_scope_id"`
+		*Alias
+	}{
+		Alias: (*Alias)(w),
+	}
+
+	if err = json.Unmarshal(data, &aux); err != nil {
+		return err
+	}
+	if h4 != nil {
+		var scope *Scope
+
+		if aux.Scope != "" {
+			scope, err = h4.GetScope(aux.Scope)
+			if err != nil {
+				return err
+			}
+		} else {
+			scope = nil
+		}
+
+		w.Scope = scope
 	} else {
 		return fmt.Errorf("H4 is not defined")
 	}
@@ -470,4 +540,40 @@ func (a *Application) SetPrimary(enable bool) error {
 	}
 
 	return nil
+}
+
+func (a *Application) WhatIf(consumerIP string, providerIP string, providerPort int, protocol string, enforced bool) (*WhatIfResult, error) {
+	req := new(WhatIfRequest)
+	req.ConsumerIP = consumerIP
+	req.ProviderIP = providerIP
+	req.ProviderPort = providerPort
+	req.Protocol = protocol
+
+	if enforced == true {
+		req.AnalysisType = "enforced"
+	} else {
+		req.AnalysisType = "analyzed"
+	}
+
+	rootScope, err := a.h4.GetRootScope(a.Scope.VRF)
+	if err != nil {
+		return nil, fmt.Errorf("Error getting root scope %s", err)
+	}
+
+	jsonStr, err := json.Marshal(&req)
+	if err != nil {
+		return nil, fmt.Errorf("Error Marshalling whatif request %s", err)
+	}
+	postResp, err := a.h4.Post(fmt.Sprintf("/policies/%s/quick_analysis", rootScope.ID), fmt.Sprintf("%s", jsonStr))
+	if err != nil {
+		return nil, fmt.Errorf("POST error: %s / POST: %s", err.Error(), jsonStr)
+	}
+
+	w := new(WhatIfResult)
+	err = json.Unmarshal(postResp, &w)
+	if err != nil {
+		return nil, fmt.Errorf("Error unmarshalling JSON: %s / JSON: %s", err.Error(), postResp)
+	}
+
+	return w, nil
 }
